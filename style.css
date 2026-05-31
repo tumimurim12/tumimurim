@@ -466,16 +466,9 @@ main {
 .carousel-item-image {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--pale-pink), var(--metallic-pink));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    transition: background 0.3s ease, transform 0.3s ease;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    display: block;
     object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
 .carousel-item:hover .carousel-item-image {
@@ -998,15 +991,6 @@ footer {
 
     .mission-vision {
         grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .mission-card, .vision-card {
-        padding: 1.5rem;
-    }
-
-    .mission-card h3, .vision-card h3 {
-        font-size: 1.2rem;
     }
 
     .values-section {
@@ -1017,16 +1001,52 @@ footer {
         grid-template-columns: 1fr;
     }
 
+    .values-title {
+        font-size: 1.5rem;
+    }
+
     .value-card {
         padding: 1.5rem;
     }
 
+    .building-section {
+        padding: 3rem 2%;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
     .carousel-item {
         flex: 0 0 180px;
-        height: 230px;
+        height: 240px;
+    }
+
+    .carousel-item-label {
+        padding: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .progress-section {
+        padding: 3rem 2%;
     }
 
     .progress-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .progress-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .progress-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .stat-card {
         padding: 1.5rem;
     }
 
@@ -1039,18 +1059,73 @@ footer {
     }
 
     .contact-title {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+    }
+
+    .contact-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-options {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .contact-card {
+        padding: 1.5rem;
+    }
+
+    .contact-link {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
     }
 
     .newsletter-section {
-        padding: 2.5rem 2%;
+        padding: 3rem 2%;
     }
 
     .newsletter-title {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+    }
+
+    .newsletter-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .newsletter-input,
+    .newsletter-button {
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .newsletter-input {
+        border-radius: 6px 6px 0 0;
+    }
+
+    .newsletter-button {
+        border-radius: 0 0 6px 6px;
     }
 
     footer {
-        padding: 2rem 3%;
+        padding: 2.5rem 2%;
+    }
+
+    .footer-links {
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+        font-size: 0.8rem;
+    }
+
+    .footer-text {
+        font-size: 0.75rem;
     }
 }
