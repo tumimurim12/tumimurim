@@ -60,6 +60,7 @@ nav {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 100;
 }
 
 .nav-center a {
@@ -79,6 +80,7 @@ nav {
     display: flex;
     gap: 1.5rem;
     align-items: center;
+    z-index: 101;
 }
 
 .nav-toggle {
@@ -94,6 +96,7 @@ nav {
     justify-content: center;
     cursor: pointer;
     transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 102;
 }
 
 .nav-toggle:hover {
@@ -346,6 +349,8 @@ main {
 .values-section {
     background: var(--metallic-pink);
     padding: 6rem 5%;
+    position: relative;
+    z-index: 5;
 }
 
 .values-container {
@@ -397,6 +402,8 @@ main {
 .building-section {
     background: var(--white);
     padding: 6rem 5%;
+    position: relative;
+    z-index: 5;
 }
 
 .section-title {
