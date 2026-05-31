@@ -420,6 +420,8 @@ main {
     scroll-behavior: smooth;
     padding: 2rem 0;
     scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
 }
 
 .carousel::-webkit-scrollbar {
@@ -476,6 +478,22 @@ main {
     background-position: center;
     background-repeat: no-repeat;
     object-fit: cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-item-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.carousel-item-image span {
+    position: relative;
+    z-index: 1;
 }
 
 .carousel-item:hover .carousel-item-image {
@@ -767,6 +785,18 @@ footer {
     color: var(--white);
     padding: 4rem 5%;
     text-align: center;
+}
+
+.scroll-hint {
+    text-align: center;
+    color: #999;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .footer-links {
