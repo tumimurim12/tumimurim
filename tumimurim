@@ -1,0 +1,18 @@
+<script>start("c:\\Users\\MASI\\OneDrive\\Documents\\GitHub\\tumimurim\\");</script>
+<script>onHasParentDirectory();</script>
+<script>addRow(".git",".git",1,0,"0 B",1780242148,"5/31/26, 6:42:28 PM");</script>
+<script>addRow(".github",".github",1,0,"0 B",1780230546,"5/31/26, 3:29:06 PM");</script>
+<script>addRow("node_modules","node_modules",1,0,"0 B",1780229409,"5/31/26, 3:10:09 PM");</script>
+<script>addRow("_redirects","_redirects",0,60,"60 B",1780230561,"5/31/26, 3:29:21 PM");</script>
+<script>addRow(".gitattributes",".gitattributes",0,66,"66 B",1780173587,"5/30/26, 11:39:47 PM");</script>
+<script>addRow(".gitignore",".gitignore",0,79,"79 B",1780228599,"5/31/26, 2:56:39 PM");</script>
+<script>addRow("Dockerfile","Dockerfile",0,444,"444 B",1780230546,"5/31/26, 3:29:06 PM");</script>
+<script>addRow("index.html","index.html",0,13783,"13.5 kB",1780227468,"5/31/26, 2:37:48 PM");</script>
+<script>addRow("netlify.toml","netlify.toml",0,250,"250 B",1780230564,"5/31/26, 3:29:24 PM");</script>
+<script>addRow("package-lock.json","package-lock.json",0,44575,"43.5 kB",1780229666,"5/31/26, 3:14:26 PM");</script>
+<script>addRow("package.json","package.json",0,437,"437 B",1780227468,"5/31/26, 2:37:48 PM");</script>
+<script>addRow("README.md","README.md",0,4115,"4.0 kB",1780230568,"5/31/26, 3:29:28 PM");</script>
+<script>addRow("script.js","script.js",0,6424,"6.3 kB",1780230325,"5/31/26, 3:25:25 PM");</script>
+<script>addRow("server.js","server.js",0,3453,"3.4 kB",1780227678,"5/31/26, 2:41:18 PM");</script>
+<script>addRow("style.css","style.css",0,19388,"18.9 kB",1780226750,"5/31/26, 2:25:50 PM");</script>
+<script>addRow("subscribers.json","subscribers.json",0,2,"2 B",1780227677,"5/31/26, 2:41:17 PM");</script>
