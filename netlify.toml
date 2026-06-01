@@ -5,6 +5,6 @@
 # Redirect /api/* to an external backend. Replace the target with your backend URL.
 [[redirects]]
   from = "/api/*"
-  to = "https://your-backend.onrender.com/api/:splat"
+  to = "https://tumimurim-api.onrender.com/api/:splat"
   status = 200
   force = true
