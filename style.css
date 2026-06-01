@@ -36,7 +36,7 @@ nav {
     top: 0;
     left: 0;
     right: 0;
-    padding: 1.5rem 5%;
+    padding: 1.5rem 3%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,14 +52,17 @@ nav {
     font-weight: 700;
     color: var(--white);
     letter-spacing: 2px;
+    flex-shrink: 0;
+    min-width: 120px;
 }
 
 .nav-center {
     display: flex;
-    gap: 3rem;
+    gap: 2.5rem;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    white-space: nowrap;
 }
 
 .nav-center a {
@@ -79,6 +82,9 @@ nav {
     display: flex;
     gap: 1.5rem;
     align-items: center;
+    flex-shrink: 0;
+    min-width: 150px;
+    justify-content: flex-end;
 }
 
 .nav-toggle {
@@ -285,6 +291,8 @@ main {
 
 .about-text-wrapper {
     padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .about-title {
@@ -309,14 +317,16 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid #eee;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 2px solid #eee;
 }
 
 .mission-card, .vision-card {
-    padding: 2rem;
-    border-radius: 8px;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
 }
 
 .mission-card {
@@ -325,6 +335,11 @@ main {
 
 .vision-card {
     background: var(--pale-pink);
+}
+
+.mission-card:hover, .vision-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
 
 .mission-card h3, .vision-card h3 {
@@ -362,15 +377,19 @@ main {
 .values-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .value-card {
     background: var(--white);
-    padding: 2.5rem;
+    padding: 3rem 2.5rem;
     border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .value-card:hover {

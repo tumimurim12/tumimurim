@@ -88,12 +88,7 @@ async function handleNewsletterSubmit(event) {
         return;
     }
 
-    // Determine API base:
-    // - Local dev: explicitly use http://localhost:3001
-    // - Production: use relative path so Netlify redirects or functions can handle /api/*
-    const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-    const API_BASE = isLocalhost ? 'http://localhost:3001' : (window.API_BASE || '');
-    const endpoint = (API_BASE ? API_BASE + '/api/subscribe' : '/api/subscribe');
+    const endpoint = '/api/subscribe';
 
     submitButton.disabled = true;
     submitButton.textContent = 'Sending...';
