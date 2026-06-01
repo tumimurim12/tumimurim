@@ -2,11 +2,6 @@
   "name": "tumimurim",
   "version": "1.0.0",
   "description": "TUMIMURIM - Building in my 20s. A space for thoughtful growth, disciplined living, and God-centered transformation.",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "build": "node scripts/build-static.js"
-  },
   "keywords": [
     "portfolio",
     "personal",
