@@ -1,101 +1,22 @@
-import crypto from 'node:crypto';
+export default function handler(req, res) {
+  // Only accept POST requests
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-const subscribers = new Map();
+  const { email } = req.body;
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Accept'
-};
+  // Basic validation
+  if (!email || !email.includes('@')) {
+    return res.status(400).json({ error: 'Please provide a valid email address.' });
+  }
 
-function json(payload, status = 200, headers = {}) {
-  return Response.json(payload, {
-    status,
-    headers: {
-      ...corsHeaders,
-      ...headers
-    }
+  // ✅ For now this just logs and confirms
+  // (To actually store emails, you'd connect a free service like EmailOctopus or Mailchimp)
+  console.log('New subscriber:', email);
+
+  return res.status(200).json({
+    success: true,
+    message: 'Thank you for subscribing! 🌿'
   });
 }
-
-async function readEmail(request) {
-  const contentType = request.headers.get('content-type') || '';
-
-  if (contentType.includes('application/json')) {
-    const body = await request.json().catch(() => ({}));
-    return (body.email || '').toString().trim();
-  }
-
-  if (
-    contentType.includes('application/x-www-form-urlencoded') ||
-    contentType.includes('multipart/form-data')
-  ) {
-    const form = await request.formData();
-    return (form.get('email') || '').toString().trim();
-  }
-
-  const text = await request.text();
-
-  try {
-    const body = JSON.parse(text);
-    return (body.email || '').toString().trim();
-  } catch {
-    return (new URLSearchParams(text).get('email') || '').trim();
-  }
-}
-
-export function OPTIONS() {
-  return new Response(null, {
-    status: 204,
-    headers: corsHeaders
-  });
-}
-
-export async function POST(request) {
-  const email = await readEmail(request);
-
-  if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-    return json({ error: 'Invalid email address' }, 400);
-  }
-
-  const key = email.toLowerCase();
-
-  if (subscribers.has(key)) {
-    return json({ message: 'Already subscribed.' });
-  }
-
-  const record = {
-    id: crypto.randomUUID(),
-    email,
-    subscribedAt: new Date().toISOString()
-  };
-
-  subscribers.set(key, record);
-  console.log('[Newsletter] New subscription:', record);
-
-  return json({
-    message: 'Thanks! Your email has been submitted.'
-  });
-}
-
-export function GET() {
-  return json({ error: 'Method not allowed' }, 405, {
-    Allow: 'POST, OPTIONS'
-  });
-}
-
-async function fetch(request) {
-  if (request.method === 'OPTIONS') {
-    return OPTIONS();
-  }
-
-  if (request.method === 'POST') {
-    return POST(request);
-  }
-
-  return GET();
-}
-
-export default {
-  fetch
-};
