@@ -163,9 +163,7 @@ main {
 }
 
 .hero-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    display: flex;
     align-items: flex-end;
     width: 100%;
     z-index: 10;
@@ -615,6 +613,39 @@ main {
     margin-top: 2rem;
 }
 
+.disciplines-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.discipline-card {
+    padding: 2.5rem;
+    background: linear-gradient(135deg, var(--pale-pink), #F0D0E0);
+    border-radius: 8px;
+    border-left: 4px solid var(--bouquet);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.discipline-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(155, 123, 154, 0.2);
+}
+
+.discipline-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--bouquet);
+    margin-bottom: 0.8rem;
+}
+
+.discipline-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #666;
+}
+
 .stat-card {
     padding: 2rem;
     background: var(--pale-pink);
@@ -781,10 +812,39 @@ main {
 
 /* FOOTER */
 footer {
-    background: var(--dark-text);
+    background: linear-gradient(135deg, var(--bouquet), #8B6B8A);
     color: var(--white);
     padding: 4rem 5%;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '🌸';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 10rem;
+    opacity: 0.05;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-content {
+    position: relative;
+    z-index: 1;
+}
+
+.footer-watermark {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-top: 1rem;
+    font-style: italic;
 }
 
 .scroll-hint {
@@ -797,6 +857,18 @@ footer {
     max-width: 320px;
     margin-left: auto;
     margin-right: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.3s ease;
+    display: block;
+    width: 100%;
+}
+
+.scroll-hint:hover {
+    color: var(--bouquet);
 }
 
 .footer-links {
@@ -938,6 +1010,10 @@ footer {
     }
 
     .progress-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .disciplines-grid {
         grid-template-columns: 1fr;
     }
 
