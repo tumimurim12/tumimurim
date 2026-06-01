@@ -75,52 +75,6 @@ function scrollCarousel() {
     });
 }
 
-async function handleNewsletterSubmit(event) {
-    event.preventDefault();
-    const form = event.target;
-    const submitButton = form.querySelector('button[type="submit"]');
-    const messageNode = document.querySelector('.newsletter-message');
-    if (!messageNode || !submitButton) return;
-    const emailInput = form.querySelector('input[name="email"]');
-    const email = emailInput ? emailInput.value.trim() : '';
-    if (!email) {
-        messageNode.textContent = 'Please enter a valid email.';
-        return;
-    }
-
-    const endpoint = '/api/subscribe';
-
-    submitButton.disabled = true;
-    submitButton.textContent = 'Sending...';
-    messageNode.textContent = '';
-
-    try {
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ email })
-        });
-
-        const data = await response.json().catch(() => ({}));
-
-        if (response.ok) {
-            messageNode.textContent = data.message || 'Thanks! Your email has been submitted.';
-            form.reset();
-        } else {
-            messageNode.textContent = data.error || data.message || 'Something went wrong. Please try again.';
-        }
-    } catch (error) {
-        messageNode.textContent = 'Network error. Please try again later.';
-        console.error('Newsletter submit error:', error);
-    }
-
-    submitButton.disabled = false;
-    submitButton.textContent = 'Subscribe';
-}
-
 // Fade in animation on load
 window.addEventListener('load', () => {
     document.querySelectorAll('.hero-title, .hero-subtitle, .hero-image-wrapper').forEach(el => {
