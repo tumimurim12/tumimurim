@@ -4,6 +4,7 @@
   "description": "TUMIMURIM - Building in my 20s. A space for thoughtful growth, disciplined living, and God-centered transformation.",
   "private": true,
   "scripts": {
+    "start": "node server.js",
     "build": "echo 'Static site ready for deployment'"
   },
   "keywords": [
