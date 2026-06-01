@@ -1,6 +1,5 @@
 node_modules/
 .env
-subscribers.json
-confirmation_links.json
-npm-debug.log
-public/
+.env.local
+.DS_Store
+*.log
