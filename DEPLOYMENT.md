@@ -70,7 +70,7 @@ git push origin feature/render-deploy
 - Removed legacy `server.js` routing from vercel.json
 
 ### Deployment Configuration
-- vercel.json - static root output configured without legacy builds/routes
+- vercel.json - static `public/` output configured without legacy builds/routes
 - .vercelignore - excludes git, node_modules, and dev files
 - package.json - includes Node.js 20.x requirement
 

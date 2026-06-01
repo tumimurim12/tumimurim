@@ -1,105 +1,131 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const crypto = require('crypto');
+const crypto = require('node:crypto');
+const fs = require('node:fs');
+const http = require('node:http');
+const path = require('node:path');
 
-const app = express();
 const PORT = process.env.PORT || 3000;
-const DATA_FILE = path.join(__dirname, 'subscribers.json');
-const CONFIRM_LOG = path.join(__dirname, 'confirmation_links.json');
+const subscribers = new Map();
+const staticRoot = fs.existsSync(path.join(__dirname, 'public'))
+  ? path.join(__dirname, 'public')
+  : __dirname;
 
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+const contentTypes = {
+  '.css': 'text/css; charset=utf-8',
+  '.html': 'text/html; charset=utf-8',
+  '.jpg': 'image/jpeg',
+  '.js': 'text/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.png': 'image/png'
+};
 
-function readSubscribers() {
-  try {
-    if (fs.existsSync(DATA_FILE)) {
-      const raw = fs.readFileSync(DATA_FILE, 'utf8');
-      return JSON.parse(raw || '[]');
-    }
-  } catch (err) {
-    console.error('Failed to read subscribers file', err);
-  }
-  return [];
+function sendJson(res, statusCode, payload) {
+  res.writeHead(statusCode, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Accept'
+  });
+  res.end(JSON.stringify(payload));
 }
 
-function writeSubscribers(list) {
-  try {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(list, null, 2), 'utf8');
-    return true;
-  } catch (err) {
-    console.error('Failed to write subscribers file', err);
-    return false;
-  }
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    let body = '';
+
+    req.on('data', chunk => {
+      body += chunk;
+    });
+    req.on('end', () => resolve(body));
+    req.on('error', reject);
+  });
 }
 
-// Simple health-check
-app.get('/health', (req, res) => res.json({ status: 'ok' }));
+async function handleSubscribe(req, res) {
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204, {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Accept'
+    });
+    res.end();
+    return;
+  }
 
-app.post('/api/subscribe', (req, res) => {
-  const email = (req.body.email || '').toString().trim();
+  if (req.method !== 'POST') {
+    sendJson(res, 405, { error: 'Method not allowed' });
+    return;
+  }
+
+  const rawBody = await readBody(req);
+  let email = '';
+
+  try {
+    const payload = JSON.parse(rawBody || '{}');
+    email = (payload.email || '').toString().trim();
+  } catch {
+    email = (new URLSearchParams(rawBody).get('email') || '').trim();
+  }
+
   if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-    return res.status(400).json({ error: 'Invalid email address' });
+    sendJson(res, 400, { error: 'Invalid email address' });
+    return;
   }
 
-  const subscribers = readSubscribers();
+  const key = email.toLowerCase();
 
-  // Avoid exact duplicates
-  if (subscribers.find(s => s.email.toLowerCase() === email.toLowerCase())) {
-    return res.status(200).json({ message: 'Already subscribed' });
+  if (subscribers.has(key)) {
+    sendJson(res, 200, { message: 'Already subscribed.' });
+    return;
   }
 
-  // Create confirmation token
-  const token = crypto.randomBytes(20).toString('hex');
-  const record = { email, subscribedAt: new Date().toISOString(), confirmed: false, token };
-  subscribers.push(record);
+  subscribers.set(key, {
+    id: crypto.randomUUID(),
+    email,
+    subscribedAt: new Date().toISOString()
+  });
 
-  if (!writeSubscribers(subscribers)) {
-    return res.status(500).json({ error: 'Could not save subscription' });
+  sendJson(res, 200, { message: 'Thanks! Your email has been submitted.' });
+}
+
+function sendStatic(req, res) {
+  const url = new URL(req.url, `http://${req.headers.host}`);
+  const requestPath = url.pathname === '/' ? '/index.html' : url.pathname;
+  const filePath = path.normalize(path.join(staticRoot, requestPath));
+  const relativePath = path.relative(staticRoot, filePath);
+
+  if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+    res.writeHead(403);
+    res.end('Forbidden');
+    return;
   }
 
-  const confirmUrl = `${req.protocol}://${req.get('host')}/api/confirm?token=${token}`;
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      res.writeHead(404);
+      res.end('Not found');
+      return;
+    }
 
-  // Log the confirmation link (for development). In production send via email provider.
-  try {
-    const entry = { email, confirmUrl, createdAt: new Date().toISOString() };
-    fs.appendFileSync(CONFIRM_LOG, JSON.stringify(entry) + '\n', 'utf8');
-  } catch (err) {
-    console.error('Failed to log confirmation link', err);
+    const ext = path.extname(filePath).toLowerCase();
+    res.writeHead(200, {
+      'Content-Type': contentTypes[ext] || 'application/octet-stream'
+    });
+    res.end(data);
+  });
+}
+
+const server = http.createServer((req, res) => {
+  if (req.url.startsWith('/api/subscribe')) {
+    handleSubscribe(req, res).catch(error => {
+      console.error('Newsletter error:', error);
+      sendJson(res, 500, { error: 'Could not save subscription' });
+    });
+    return;
   }
 
-  console.log('Confirmation URL (dev):', confirmUrl);
-
-  return res.status(200).json({ message: 'Subscribed — confirmation required', confirmUrl });
+  sendStatic(req, res);
 });
 
-// Confirm endpoint
-app.get('/api/confirm', (req, res) => {
-  const token = (req.query.token || '').toString();
-  if (!token) return res.status(400).send('Missing token');
-
-  const subscribers = readSubscribers();
-  const idx = subscribers.findIndex(s => s.token === token);
-  if (idx === -1) return res.status(404).send('Invalid or expired token');
-
-  subscribers[idx].confirmed = true;
-  delete subscribers[idx].token;
-  writeSubscribers(subscribers);
-
-  return res.send('Email confirmed — thank you!');
-});
-
-// Dev: list subscribers (no tokens returned)
-app.get('/api/subscribers', (req, res) => {
-  const subscribers = readSubscribers().map(s => ({ email: s.email, subscribedAt: s.subscribedAt, confirmed: s.confirmed || false }));
-  res.json(subscribers);
-});
-
-app.use(express.static(path.join(__dirname)));
-
-app.listen(PORT, () => {
-  console.log(`Newsletter backend listening on http://localhost:${PORT}`);
+server.listen(PORT, () => {
+  console.log(`TUMIMURIM listening on http://localhost:${PORT}`);
 });

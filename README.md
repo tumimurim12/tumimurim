@@ -74,15 +74,16 @@ After deployment, the front-end will call `/api/subscribe` and Netlify will forw
 ### Deploying to Vercel
 
 - Vercel can host the static front-end directly from this repository.
+- `npm run build` copies the site files into `public/`, which is the Vercel output directory.
 - The `api/subscribe.mjs` file is a Vercel Function, so the newsletter form can post to `/api/subscribe` on the same deployment.
-- The `vercel.json` file keeps the static output directory at the project root and avoids legacy `builds`/`routes` entries that would exclude static assets.
+- The `vercel.json` file points Vercel at `public/` and avoids legacy `builds`/`routes` entries that would exclude static assets.
 - The Vercel Function uses in-memory storage for demo submissions. For production subscriber storage, connect a database or email marketing provider.
 
 Example Vercel workflow:
 
 1. Commit and push your changes to GitHub.
 2. Connect the repository to Vercel and choose the root folder as the project.
-3. Deploy the project with the default settings.
+3. Deploy the project with the default settings. Vercel will run `npm run build` and serve `public/index.html` at `/`.
 4. Test the live `/api/subscribe` endpoint from the newsletter form.
 
 ### Deploying the Express backend to Render (recommended)

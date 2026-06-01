@@ -83,3 +83,19 @@ export function GET() {
     Allow: 'POST, OPTIONS'
   });
 }
+
+async function fetch(request) {
+  if (request.method === 'OPTIONS') {
+    return OPTIONS();
+  }
+
+  if (request.method === 'POST') {
+    return POST(request);
+  }
+
+  return GET();
+}
+
+export default {
+  fetch
+};
