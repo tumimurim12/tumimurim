@@ -21,7 +21,7 @@
 - [x] Social links - LinkedIn, Instagram, GitHub, Substack
 
 ### Backend Configuration ✅
-- [x] Vercel serverless function created (`api/subscribe.js`)
+- [x] Vercel serverless function created (`api/subscribe.mjs`)
 - [x] API endpoint URL simplified to `/api/subscribe`
 - [x] CORS headers configured for Vercel
 - [x] Email validation in place
@@ -63,16 +63,16 @@ git push origin feature/render-deploy
 - Updated Scripture quote to Proverbs 31:17
 
 ### Technical Updates
-- Created Vercel serverless function (`api/subscribe.js`)
+- Created Vercel serverless function (`api/subscribe.mjs`)
 - Updated API endpoint handling in script.js
 - Simplified API URL to work with Vercel routing
 - Added proper CORS headers for production
-- Configured caching headers in vercel.json
+- Removed legacy `server.js` routing from vercel.json
 
 ### Deployment Configuration
-- vercel.json - framework: vanilla, buildCommand included
+- vercel.json - static `public/` output configured without legacy builds/routes
 - .vercelignore - excludes git, node_modules, and dev files
-- package.json - includes Node.js 18.x requirement
+- package.json - includes Node.js 20.x requirement
 
 ## Testing Checklist Before Merge
 

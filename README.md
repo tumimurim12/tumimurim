@@ -71,18 +71,20 @@ Example Netlify workflow:
 
 After deployment, the front-end will call `/api/subscribe` and Netlify will forward those requests to the backend URL you configured.
 
-### Deploying the frontend to Vercel
+### Deploying to Vercel
 
-- Vercel can host the static front-end directly from this repository. The file `vercel.json` in the repo root tells Vercel to treat `index.html` as a static site entry point.
-- If your backend remains external, keep the API host separate and update `script.js` so the deployed frontend calls that backend URL for `/api/subscribe`.
-- If you want the backend on Vercel too, you will need to convert the Express endpoints into Vercel Serverless Functions under `api/`.
+- Vercel can host the static front-end directly from this repository.
+- `npm run build` copies the site files into `public/`, which is the Vercel output directory.
+- The `api/subscribe.mjs` file is a Vercel Function, so the newsletter form can post to `/api/subscribe` on the same deployment.
+- The `vercel.json` file points Vercel at `public/` and avoids legacy `builds`/`routes` entries that would exclude static assets.
+- The Vercel Function uses in-memory storage for demo submissions. For production subscriber storage, connect a database or email marketing provider.
 
 Example Vercel workflow:
 
 1. Commit and push your changes to GitHub.
 2. Connect the repository to Vercel and choose the root folder as the project.
-3. Deploy the project as a static site. No build command is needed.
-4. If using an external backend, set the frontend API URL accordingly or configure rewrites in Vercel.
+3. Deploy the project with the default settings. Vercel will run `npm run build` and serve `public/index.html` at `/`.
+4. Test the live `/api/subscribe` endpoint from the newsletter form.
 
 ### Deploying the Express backend to Render (recommended)
 

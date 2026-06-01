@@ -3,3 +3,4 @@ node_modules/
 subscribers.json
 confirmation_links.json
 npm-debug.log
+public/
