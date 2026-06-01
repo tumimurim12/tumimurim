@@ -72,7 +72,7 @@ git push origin feature/render-deploy
 ### Deployment Configuration
 - vercel.json - static root output configured without legacy builds/routes
 - .vercelignore - excludes git, node_modules, and dev files
-- package.json - includes Node.js 24.x requirement
+- package.json - includes Node.js 20.x requirement
 
 ## Testing Checklist Before Merge
 
