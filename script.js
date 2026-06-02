@@ -69,36 +69,15 @@ async function fetchBlogPosts() {
 function scrollCarousel() {
     const carousel = document.querySelector('.carousel');
     if (!carousel) return;
+    
+    // Scroll right by 320px with smooth animation
     carousel.scrollBy({
         left: 320,
         behavior: 'smooth'
     });
 }
 
-// Fade in animation on load
-window.addEventListener('load', () => {
-    document.querySelectorAll('.hero-title, .hero-subtitle, .hero-image-wrapper').forEach(el => {
-        el.style.opacity = '1';
-    });
-    fetchBlogPosts();
-});
-
-// Smooth scroll for navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
-        const navMenu = document.getElementById('nav-menu');
-        if (navMenu && navMenu.classList.contains('open')) {
-            navMenu.classList.remove('open');
-            document.querySelector('.nav-toggle')?.setAttribute('aria-expanded', 'false');
-        }
-    });
-});
-
+// Mobile navigation toggle
 const navToggle = document.querySelector('.nav-toggle');
 if (navToggle) {
     navToggle.addEventListener('click', () => {
@@ -108,3 +87,28 @@ if (navToggle) {
         navToggle.setAttribute('aria-expanded', String(isOpen));
     });
 }
+
+// Smooth scroll for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+        // Close mobile menu after clicking a link
+        const navMenu = document.getElementById('nav-menu');
+        if (navMenu && navMenu.classList.contains('open')) {
+            navMenu.classList.remove('open');
+            document.querySelector('.nav-toggle')?.setAttribute('aria-expanded', 'false');
+        }
+    });
+});
+
+// Fade in animation on load
+window.addEventListener('load', () => {
+    document.querySelectorAll('.hero-title, .hero-subtitle, .hero-image-wrapper').forEach(el => {
+        el.style.opacity = '1';
+    });
+    fetchBlogPosts();
+});
