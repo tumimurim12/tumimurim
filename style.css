@@ -54,3 +54,29 @@
     line-height: 1.6;
     color: #666;
 }
+/* ================================
+   NAVIGATION - HAMBURGER FIX
+================================ */
+
+/* Hide hamburger button on desktop */
+.nav-toggle {
+    display: none;
+}
+
+/* Mobile only (screens 768px wide or smaller) */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-center {
+        display: none;
+    }
+
+    .nav-center.open {
+        display: flex;
+        flex-direction: column;
+    }
+}
