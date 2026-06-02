@@ -69,8 +69,6 @@ async function fetchBlogPosts() {
 function scrollCarousel() {
     const carousel = document.querySelector('.carousel');
     if (!carousel) return;
-    
-    // Scroll right by 320px with smooth animation
     carousel.scrollBy({
         left: 320,
         behavior: 'smooth'
