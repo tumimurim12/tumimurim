@@ -936,6 +936,8 @@
      BLOG — bulletproof dual-proxy + fallback
      ════════════════════════════════════════════ -->
 <script>
+/* Latest Insights — loads live posts from Blogger via native JSONP (no proxy, no CORS).
+   Falls back to cached posts only if the feed is unreachable. */
 const FALLBACK = [
   { title:"Growing Up: The Four Stages of Becoming",
     link:"https://wordwayjourney.blogspot.com/2026/05/reflections-on-growing-up.html",
@@ -959,33 +961,33 @@ function renderPosts(posts){
       <a class="read-more" href="${p.link}" target="_blank" rel="noopener">Read more →</a>
     </article>`).join('');
 }
-async function tryRss2Json(){
-  const r=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+
-    encodeURIComponent('https://wordwayjourney.blogspot.com/feeds/posts/default')+'&count=3',
-    {signal:AbortSignal.timeout(6000)});
-  const d=await r.json();
-  if(d.status!=='ok'||!d.items?.length) throw new Error();
-  return d.items.map(i=>({title:i.title,link:i.link,
-    date:new Date(i.pubDate).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}),
-    excerpt:i.description.replace(/<[^>]*>/g,'').trim().slice(0,190)+'…'}));
-}
-async function tryAllOrigins(){
-  const u='https://api.allorigins.win/get?url='+
-    encodeURIComponent('https://wordwayjourney.blogspot.com/feeds/posts/default?alt=json&max-results=3');
-  const r=await fetch(u,{signal:AbortSignal.timeout(6000)});
-  const d=await r.json();
-  const entries=(JSON.parse(d.contents).feed.entry||[]).slice(0,3);
-  if(!entries.length) throw new Error();
-  return entries.map(e=>({title:e.title.$t,
-    link:(e.link.find(l=>l.rel==='alternate')||{}).href||'#',
-    date:new Date(e.published.$t).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}),
-    excerpt:(e.summary?.$t||'').replace(/<[^>]*>/g,'').trim().slice(0,190)+'…'}));
-}
-(async()=>{
-  renderPosts(FALLBACK);
-  try{const live=await tryRss2Json().catch(()=>tryAllOrigins());
-    if(live?.length) renderPosts(live);}
-  catch(e){console.info('Blog: showing cached posts');}
+(function(){
+  renderPosts(FALLBACK);                 // instant content; replaced when live feed arrives
+  var done = false;
+  window.__blogCb = function(data){
+    try{
+      var entries = (data && data.feed && data.feed.entry) || [];
+      if(!entries.length) return;
+      var posts = entries.slice(0,3).map(function(e){
+        var link = '#';
+        (e.link||[]).forEach(function(l){ if(l.rel==='alternate') link = l.href; });
+        var raw  = (e.content && e.content.$t) || (e.summary && e.summary.$t) || '';
+        var text = raw.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+        return {
+          title:   e.title.$t,
+          link:    link,
+          date:    new Date(e.published.$t).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}),
+          excerpt: text.slice(0,180) + (text.length>180 ? '…' : '')
+        };
+      });
+      if(posts.length){ done = true; renderPosts(posts); }
+    }catch(err){ console.info('Blog: showing cached posts'); }
+  };
+  var s = document.createElement('script');
+  s.src = 'https://wordwayjourney.blogspot.com/feeds/posts/default?alt=json-in-script&max-results=3&callback=__blogCb';
+  s.onerror = function(){ console.info('Blog: feed unavailable, showing cached posts'); };
+  document.head.appendChild(s);
+  setTimeout(function(){ if(!done) console.info('Blog: feed slow, showing cached posts'); }, 7000);
 })();
 </script>
  
