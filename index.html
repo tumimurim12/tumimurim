@@ -9,12 +9,14 @@
   <meta property="og:title" content="TUMIMURIM – Building in My 20s" />
   <meta property="og:description" content="A personal space for disciplined growth, faith, and intentional living." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://raw.githubusercontent.com/tumimurim12/tumimurim/main/tumi.jpg" />
-  <meta property="og:image:alt" content="Tumim Asefa" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/tumimurim12/tumimurim/main/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Tumim Asefa — Building in My 20s" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="TUMIMURIM – Building in My 20s" />
   <meta name="twitter:description" content="A personal space for disciplined growth, faith, and intentional living." />
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/tumimurim12/tumimurim/main/tumi.jpg" />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/tumimurim12/tumimurim/main/og-image.jpg" />
   <meta name="theme-color" content="#7a4a5a" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -319,6 +321,8 @@
     }
  
     /* Image wrapper — overflow:hidden so scale doesn't bleed */
+    /* picture wrappers are layout-transparent so img styles apply as before */
+    picture { display: contents; }
     .resource-img-wrap {
       overflow: hidden;
       flex-shrink: 0;
@@ -645,7 +649,10 @@
       </div>
     </div>
     <div class="hero-photo-wrap">
-      <img src="tumi.jpg" alt="Tumim Asefa portrait" loading="eager"/>
+      <picture>
+        <source type="image/webp" srcset="tumi.webp" />
+        <img src="tumi.jpg" alt="Tumim Asefa portrait" width="1024" height="1024" loading="eager" decoding="async"/>
+      </picture>
       <span class="hero-badge">🌿 Medical Student · Ethiopia</span>
     </div>
   </div>
@@ -741,7 +748,10 @@
              href="https://phantom-tailor-db5.notion.site/Bible-study-notes-Real-time-Bible-study-Videos-36f8d2d82a1b800886bbd44511550c52"
              target="_blank" rel="noopener">
             <div class="resource-img-wrap">
-              <img class="resource-img" src="carousel-1.jpg" alt="Open bibles and candles — Bible study scene" loading="lazy"/>
+              <picture>
+                <source type="image/webp" srcset="carousel-1.webp" />
+                <img class="resource-img" src="carousel-1.jpg" alt="Open bibles and candles — Bible study scene" width="900" height="1200" loading="lazy" decoding="async"/>
+              </picture>
             </div>
             <div class="resource-body">
               <span class="resource-label">📖 Bible Study</span>
@@ -758,7 +768,10 @@
              href="https://phantom-tailor-db5.notion.site/My-Singing-Journey-36f8d2d82a1b80c7ac89df1a03a7d623?pvs=74"
              target="_blank" rel="noopener">
             <div class="resource-img-wrap">
-              <img class="resource-img" src="carousel-2.jpg" alt="Microphone on a stand — singing journey" loading="lazy"/>
+              <picture>
+                <source type="image/webp" srcset="carousel-2.webp" />
+                <img class="resource-img" src="carousel-2.jpg" alt="Microphone on a stand — singing journey" width="500" height="506" loading="lazy" decoding="async"/>
+              </picture>
             </div>
             <div class="resource-body">
               <span class="resource-label">🎵 Vocal Arts</span>
@@ -775,7 +788,10 @@
              href="https://phantom-tailor-db5.notion.site/36f8d2d82a1b80eea6fdc2fc42d21462?v=36f8d2d82a1b806e8f90000c71fcc80f"
              target="_blank" rel="noopener">
             <div class="resource-img-wrap">
-              <img class="resource-img" src="carousel-3.jpg" alt="Stethoscope on an open textbook — medical school" loading="lazy"/>
+              <picture>
+                <source type="image/webp" srcset="carousel-3.webp" />
+                <img class="resource-img" src="carousel-3.jpg" alt="Stethoscope on an open textbook — medical school" width="500" height="500" loading="lazy" decoding="async"/>
+              </picture>
             </div>
             <div class="resource-body">
               <span class="resource-label">⚕️ Medicine</span>
@@ -827,14 +843,14 @@
     <!-- Success state for inline form -->
     <div class="nl-success" id="nlSuccess">
       <span class="tick">🌿</span>
-      <p><strong>You're in!</strong><br/>Check your inbox for a confirmation email.</p>
+      <p><strong>Almost there!</strong><br/>A tab just opened with Kit — confirm via the email it sends to finish subscribing.</p>
     </div>
  
     <!-- Single subscribe flow (posts to Kit / ConvertKit) -->
     <form id="nlForm"
           class="nl-form"
           action="https://app.convertkit.com/forms/6265200/subscriptions"
-          method="post">
+          method="post" target="_blank">
       <input class="nl-input"
              name="fields[first_name]"
              type="text"
@@ -1121,23 +1137,16 @@ function renderPosts(posts){
   var success = document.getElementById('nlSuccess');
   if (!form) return;
  
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
+  form.addEventListener('submit', function () {
+    /* Do NOT preventDefault — let the browser POST natively to Kit so the
+       subscriber is really added and Kit's genuine confirmation page opens
+       (in a new tab via target="_blank"). We only update the in-page UI. */
     btn.disabled    = true;
     btn.textContent = 'Subscribing…';
- 
-    try {
-      /* ConvertKit accepts no-cors POST with FormData */
-      await fetch(form.action, {
-        method: 'POST',
-        mode:   'no-cors',       // ConvertKit doesn't set CORS headers — this bypasses the check
-        body:   new FormData(form)
-      });
-    } catch (_) { /* network errors — still show success since no-cors always throws */ }
- 
-    /* Show success, hide form */
-    form.style.display    = 'none';
-    success.style.display = 'block';
+    setTimeout(function () {
+      form.style.display    = 'none';
+      success.style.display = 'block';
+    }, 400);
   });
 })();
 </script>
