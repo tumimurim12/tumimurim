@@ -843,22 +843,13 @@
     <h2>Renew Your Mind</h2>
     <p>Get my weekly thoughts on growth, faith, and discipline — straight to your inbox. No noise, just substance.</p>
  
-    <!-- PRIMARY: Kit.com page -->
-    <a class="kit-cta-btn"
-       href="https://thummim-assefa.kit.com"
-       target="_blank" rel="noopener">
-      <span class="kit-cta-icon">📬</span>
-      Subscribe on Kit
-    </a>
- 
     <!-- Success state for inline form -->
     <div class="nl-success" id="nlSuccess">
       <span class="tick">🌿</span>
       <p><strong>You're in!</strong><br/>Check your inbox for a confirmation email.</p>
     </div>
  
-    <!-- SECONDARY: quick inline form -->
-    <div class="nl-or">or subscribe right here</div>
+    <!-- Single subscribe flow (posts to Kit / ConvertKit) -->
     <form id="nlForm"
           class="nl-form"
           action="https://app.convertkit.com/forms/6265200/subscriptions"
@@ -913,7 +904,7 @@
           <p><strong>Your email app is opening!</strong><br/>
              Just hit Send in the email window that appeared.<br/>
              If nothing opened, email me directly:<br/>
-             <a href="mailto:tumim.ugr-8660-17@aau.edu.et" style="color:var(--bouquet);font-weight:600;">tumim.ugr-8660-17@aau.edu.et</a>
+             <a href="mailto:thummimassefa4@gmail.com" style="color:var(--bouquet);font-weight:600;">thummimassefa4@gmail.com</a>
           </p>
         </div>
  
@@ -974,18 +965,18 @@
      ════════════════════════════════════════════ -->
 <script>
 const FALLBACK = [
-  { title:"Reflections on growing up, transformation, and the four stages of becoming",
+  { title:"Growing Up: The Four Stages of Becoming",
     link:"https://wordwayjourney.blogspot.com/2026/05/reflections-on-growing-up.html",
     date:"May 28, 2026",
-    excerpt:"Age is not just a number. Age is a responsibility, a warning, a mirror — staring back and asking what have you done with what I gave you." },
-  { title:"Brick-By-Brick Mentality — How to get out of analysis paralysis",
+    excerpt:"Age isn't just a number — it's a responsibility and a mirror, asking what you've done with what you were given. A reflection on transformation and the seasons that shape us." },
+  { title:"Brick by Brick: Beating Analysis Paralysis",
     link:"https://wordwayjourney.blogspot.com/2026/05/brick-by-brick-mentality-how-to-get-out.html",
     date:"May 28, 2026",
-    excerpt:"Sometimes the weight of everything we want to do keeps us from doing anything at all. The antidote: start with one brick." },
+    excerpt:"The weight of everything we want to do can keep us from doing anything at all. The antidote is simple, if not easy: stop planning the whole wall and lay one brick." },
   { title:"Be Selective With What You Consume",
     link:"https://wordwayjourney.blogspot.com/2026/05/be-selective-with-what-you-consume.html",
     date:"May 28, 2026",
-    excerpt:"The content we feed our minds shapes who we become. Curate your inputs with the same intentionality you give your goals." }
+    excerpt:"What we feed our minds shapes who we become. Curate your inputs — books, feeds, conversations — with the same intention you give your goals." }
 ];
 function renderPosts(posts){
   document.getElementById('blog-posts').innerHTML = posts.map(p=>`
@@ -1195,7 +1186,7 @@ async function tryAllOrigins(){
  
     /* Build mailto — opens the user's default email app with everything pre-filled */
     var body = 'Hi Tumim,\n\nMy name is ' + name + ' and my email is ' + email + '.\n\n' + msg + '\n\nBest,\n' + name;
-    var href = 'mailto:tumim.ugr-8660-17@aau.edu.et'
+    var href = 'mailto:thummimassefa4@gmail.com'
              + '?subject=' + encodeURIComponent(subject)
              + '&body='    + encodeURIComponent(body);
  
