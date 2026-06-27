@@ -1,6 +1,4 @@
-/* TUMIMURIM — site script
-   Handles: mobile nav toggle, smooth in-page scroll,
-   closing the menu after a link tap, and aria state. */
+/* TUMIMURIM — site script */
 
 (function () {
   const nav = document.getElementById('nav');
@@ -17,7 +15,6 @@
       );
     });
 
-    // Close the menu after tapping a link (mobile)
     menu.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
         menu.classList.remove('open');
@@ -27,7 +24,6 @@
     });
   }
 
-  // Smooth scroll for any in-page anchor
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener('click', (e) => {
       const id = link.getAttribute('href');
@@ -40,4 +36,90 @@
       window.scrollTo({ top, behavior: 'smooth' });
     });
   });
+
+  loadBlogPosts();
 })();
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+async function loadBlogPosts() {
+  const container = document.getElementById('blog-posts');
+  if (!container) return;
+
+  try {
+    const response = await fetch(
+      'https://wordwayjourney.blogspot.com/feeds/posts/default?alt=json&max-results=3'
+    );
+    if (!response.ok) throw new Error('Feed unavailable');
+
+    const data = await response.json();
+    const entries = data.feed?.entry || [];
+
+    if (!entries.length) {
+      container.innerHTML =
+        '<div class="blog-loading"><p>No posts yet. Check back soon.</p></div>';
+      return;
+    }
+
+    container.innerHTML = entries
+      .map((entry) => {
+        const title = entry.title?.$t || 'Untitled';
+        const link =
+          entry.link?.find((item) => item.rel === 'alternate')?.href || '#';
+        const published = entry.published?.$t;
+        const date = published
+          ? new Date(published).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          : '';
+        const rawSummary = entry.summary?.$t || entry.content?.$t || '';
+        const excerpt =
+          rawSummary.replace(/<[^>]+>/g, '').trim().slice(0, 150) +
+          (rawSummary.length > 150 ? '…' : '');
+
+        return `<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="post-card">
+          <div class="post-card-title">${escapeHtml(title)}</div>
+          <div class="post-card-date">${escapeHtml(date)}</div>
+          <div class="post-card-excerpt">${escapeHtml(excerpt)}</div>
+        </a>`;
+      })
+      .join('');
+  } catch {
+    container.innerHTML =
+      '<div class="blog-loading"><p>Could not load posts. <a href="https://wordwayjourney.blogspot.com/" target="_blank" rel="noopener noreferrer">Visit the blog →</a></p></div>';
+  }
+}
+
+function scrollCarousel() {
+  const container = document.querySelector('.carousel-container');
+  if (!container) return;
+  container.scrollBy({ left: 320, behavior: 'smooth' });
+}
+
+function handleNewsletterSubmit(event) {
+  event.preventDefault();
+
+  const form = event.target;
+  const input = form.querySelector('input[type="email"]');
+  const messageEl = form
+    .closest('.newsletter-form-col')
+    ?.querySelector('.newsletter-message');
+  const email = input?.value?.trim();
+
+  if (!email) return;
+
+  window.open('https://thummim-assefa.kit.com', '_blank', 'noopener,noreferrer');
+
+  if (messageEl) {
+    messageEl.textContent =
+      'Thanks! Complete your signup on the newsletter page that just opened.';
+  }
+
+  form.reset();
+}
