@@ -3,154 +3,1207 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Juliana Silva · Portfolio</title>
-  <!-- Alegreya Font -->
+  <title>TUMIMURIM – Building in My 20s</title>
+  <meta name="description" content="A personal hub for disciplined growth, faith-centered living, and thoughtful progress during your 20s." />
+  <meta property="og:title" content="TUMIMURIM – Building in My 20s" />
+  <meta property="og:description" content="A personal space for disciplined growth, faith, and intentional living." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+ 
+  <style>
+    /* ─── RESET ───────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    img  { display: block; max-width: 100%; }
+    a    { color: inherit; text-decoration: none; }
+ 
+    /* ─── TOKENS ──────────────────────────────── */
+    :root {
+      --bouquet:      #9B7B9A;
+      --bouquet-dk:   #7A5A79;
+      --bouquet-lt:   #D4B8D3;
+      --bouquet-pale: #F3EBF3;
+      --pink-pale:    #FDEEF5;
+      --pink-blush:   #F9F0F5;
+      --charcoal:     #28252B;
+      --charcoal-md:  #3D3840;
+      --gray-mid:     #726A74;
+      --gray-lt:      #BDB5BE;
+      --cream:        #FEFAF9;
+      --white:        #FFFFFF;
+      --rule:         #E8DDE6;
+      --radius:       10px;
+      --max:          1120px;
+      --ease:         cubic-bezier(.4,0,.2,1);
+    }
+ 
+    /* ─── METALLIC PINK ───────────────────────── */
+    .metallic {
+      position: relative;
+      background: linear-gradient(150deg,
+        #FAF0F6 0%, #F0D8E6 12%, #FAF4F8 25%,
+        #EDD4E3 38%, #F8EDF4 52%, #F2DFEC 65%,
+        #FBF2F7 78%, #EED5E5 90%, #F9EFF5 100%);
+    }
+    .metallic::before {
+      content: ''; position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(110deg,
+        transparent 30%, rgba(255,255,255,.48) 50%, transparent 70%);
+      background-size: 250% 100%;
+      animation: sheen 9s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes sheen {
+      from { background-position: -100% 0; }
+      to   { background-position: 200% 0;  }
+    }
+    .metallic > * { position: relative; z-index: 1; }
+ 
+    /* ─── BODY ────────────────────────────────── */
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px; line-height: 1.75;
+      color: var(--charcoal); background: var(--white);
+      overflow-x: hidden;
+    }
+ 
+    /* ─── UTILITY ─────────────────────────────── */
+    .container  { max-width: var(--max); margin: 0 auto; padding: 0 6%; }
+    .section-pad { padding: 7rem 0; }
+    .small-pad   { padding: 5rem 0; }
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--bouquet); margin-bottom: .9rem; display: block;
+    }
+    h2.display {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem,4vw,2.8rem);
+      font-weight: 700; line-height: 1.18; color: var(--charcoal);
+    }
+    h2.display em { font-style: italic; color: var(--bouquet); }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .72em 1.8em; background: var(--bouquet); color: var(--white);
+      border-radius: 50px; font-family: 'Inter', sans-serif;
+      font-size: .88rem; font-weight: 600; letter-spacing: .04em;
+      transition: background .22s var(--ease), transform .22s var(--ease),
+                  box-shadow .22s var(--ease);
+    }
+    .btn-primary:hover {
+      background: var(--bouquet-dk); transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(155,123,154,.3);
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .72em 1.8em; border: 1.5px solid var(--bouquet);
+      color: var(--bouquet); border-radius: 50px;
+      font-family: 'Inter', sans-serif; font-size: .88rem;
+      font-weight: 600; letter-spacing: .04em;
+      transition: all .22s var(--ease);
+    }
+    .btn-ghost:hover { background: var(--pink-pale); border-color: var(--bouquet-dk); color: var(--bouquet-dk); }
+ 
+    /* ─── NAV ─────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 6%;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--charcoal); letter-spacing: -.02em;
+    }
+    .nav-logo span { color: var(--bouquet); }
+    .nav-links { display: flex; gap: 2.8rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: .78rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--bouquet);
+      position: relative; padding-bottom: 3px;
+      transition: color .2s var(--ease);
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; left: 0; bottom: 0;
+      width: 0; height: 1.5px; background: var(--bouquet-dk);
+      transition: width .25s var(--ease);
+    }
+    .nav-links a:hover { color: var(--bouquet-dk); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-socials { display: flex; gap: 1.2rem; }
+    .nav-socials a {
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--gray-mid);
+      padding: .3em .6em; border-radius: 4px;
+      transition: background .2s var(--ease), color .2s var(--ease);
+    }
+    .nav-socials a:hover { background: var(--pink-pale); color: var(--bouquet-dk); }
+ 
+    /* ─── HERO ────────────────────────────────── */
+    .hero { min-height: 92vh; display: flex; align-items: center; }
+    .hero-inner {
+      max-width: var(--max); margin: 0 auto; padding: 6rem 6%;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .hero-kicker { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.4rem; }
+    .hero-kicker::before { content: ''; width: 32px; height: 1.5px; background: var(--bouquet); flex-shrink: 0; }
+    .hero-kicker span { font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--bouquet); }
+    .hero-h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem,6vw,4.6rem); line-height: 1.08;
+      font-weight: 700; color: var(--charcoal); margin-bottom: 1.6rem;
+    }
+    .hero-h1 em { font-style: italic; color: var(--bouquet); display: block; }
+    .hero-sub { font-size: 1.02rem; color: var(--gray-mid); max-width: 420px; line-height: 1.8; margin-bottom: 2.4rem; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-photo-wrap { position: relative; display: flex; justify-content: center; }
+    .hero-photo-wrap img {
+      width: 100%; max-width: 400px; aspect-ratio: 3/4; object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 32px 72px rgba(155,123,154,.2), 0 8px 24px rgba(40,37,43,.1);
+    }
+    .hero-photo-wrap::after {
+      content: ''; position: absolute; bottom: -18px; right: calc(50% - 218px);
+      width: 55%; aspect-ratio: 1/1.2;
+      border: 2px solid var(--bouquet-lt); border-radius: 16px; z-index: -1;
+    }
+    .hero-badge {
+      position: absolute; bottom: 2rem; left: calc(50% - 185px);
+      background: var(--white); border: 1px solid var(--rule); border-radius: 50px;
+      padding: .5em 1.2em; font-size: .78rem; font-weight: 600; color: var(--bouquet);
+      box-shadow: 0 4px 18px rgba(155,123,154,.15);
+    }
+ 
+    /* ─── ABOUT ───────────────────────────────── */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; }
+    .about-label-col { padding-top: .4rem; }
+    .about-deco { width: 48px; height: 3px; background: var(--bouquet); border-radius: 2px; margin-bottom: 1.2rem; }
+    .about-label-col p { font-size: .95rem; color: var(--gray-mid); line-height: 1.8; }
+    .about-cards { display: flex; flex-direction: column; gap: 1.6rem; }
+    .about-card {
+      padding: 1.8rem 2rem; border: 1px solid var(--rule); border-radius: var(--radius);
+      background: var(--cream);
+      transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .about-card:hover { border-color: var(--bouquet-lt); box-shadow: 0 6px 24px rgba(155,123,154,.1); }
+    .about-card-tag {
+      font-size: .7rem; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--bouquet); margin-bottom: .7rem; display: block;
+    }
+    .about-card p { font-size: .95rem; color: var(--charcoal-md); line-height: 1.8; }
+ 
+    /* ─── VALUES ──────────────────────────────── */
+    #values { background: var(--charcoal); position: relative; overflow: hidden; }
+    #values::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 80% 20%, rgba(155,123,154,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .values-head { text-align: center; margin-bottom: 4rem; position: relative; }
+    .values-head .eyebrow { color: var(--bouquet-lt); }
+    .values-head .display  { color: var(--white); }
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.6rem; position: relative; }
+    .value-card {
+      padding: 2.2rem 2rem; border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius); background: rgba(255,255,255,.04);
+      transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease);
+    }
+    .value-card:hover { background: rgba(155,123,154,.14); border-color: rgba(155,123,154,.35); transform: translateY(-4px); }
+    .value-num {
+      font-family: 'Playfair Display', serif; font-size: 2.4rem;
+      font-weight: 700; font-style: italic; color: var(--bouquet);
+      opacity: .6; margin-bottom: 1rem; line-height: 1;
+    }
+    .value-card h3 { font-family: 'Playfair Display', serif; font-size: 1.12rem; font-weight: 600; color: var(--white); margin-bottom: .75rem; }
+    .value-card p  { font-size: .91rem; color: rgba(255,255,255,.58); line-height: 1.8; }
+ 
+    /* ─── BUILDING HEADER ─────────────────────── */
+    .building-head { text-align: center; padding: 7rem 6% 4rem; }
+    .building-head .display { margin-bottom: .8rem; }
+    .building-head p { font-size: .97rem; color: var(--gray-mid); max-width: 480px; margin: 0 auto; }
+    .sub-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.22rem; font-weight: 600; color: var(--charcoal);
+      margin-bottom: 1.4rem; display: flex; align-items: center; gap: 1rem;
+    }
+    .sub-heading::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+ 
+    /* ─── BLOG ────────────────────────────────── */
+    .blog-wrap { max-width: var(--max); margin: 0 auto; padding: 0 6% 2rem; }
+    #blog-posts { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.4rem; margin-bottom: 1.6rem; }
+    .blog-card {
+      background: var(--white); border: 1px solid var(--rule); border-radius: var(--radius);
+      padding: 1.8rem 1.6rem; display: flex; flex-direction: column; gap: .65rem;
+      transition: border-color .22s var(--ease), box-shadow .22s var(--ease), transform .22s var(--ease);
+    }
+    .blog-card:hover { border-color: var(--bouquet-lt); box-shadow: 0 10px 36px rgba(155,123,154,.14); transform: translateY(-4px); background: var(--pink-blush); }
+    .blog-date { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--bouquet); }
+    .blog-title { font-family: 'Playfair Display', serif; font-size: 1.02rem; font-weight: 600; color: var(--charcoal); line-height: 1.4; }
+    .blog-title a { transition: color .2s var(--ease); }
+    .blog-title a:hover { color: var(--bouquet-dk); }
+    .blog-excerpt { font-size: .88rem; color: var(--gray-mid); line-height: 1.7; flex: 1; }
+    .read-more { font-size: .82rem; font-weight: 600; color: var(--bouquet); display: inline-flex; align-items: center; gap: .3rem; transition: color .2s, gap .2s; }
+    .read-more:hover { color: var(--bouquet-dk); gap: .5rem; }
+    .blog-cta-row { text-align: right; max-width: var(--max); margin: 0 auto; padding: 0 6% 5rem; }
+    .blog-cta-row a { font-size: .85rem; font-weight: 600; color: var(--bouquet); display: inline-flex; align-items: center; gap: .35rem; transition: color .2s, gap .2s; }
+    .blog-cta-row a:hover { color: var(--bouquet-dk); gap: .55rem; }
+    .blog-skel { height: 200px; border-radius: var(--radius); background: linear-gradient(90deg, #F3ECF2 25%, #E8DCE7 50%, #F3ECF2 75%); background-size: 200% 100%; animation: skelShimmer 1.4s ease-in-out infinite; }
+    @keyframes skelShimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+ 
+    /* ═══════════════════════════════════════════
+       ─── RESOURCES CAROUSEL ─────────────────── 
+       ═══════════════════════════════════════════ */
+    .resources-wrap { max-width: var(--max); margin: 0 auto; padding: 0 6% 7rem; }
+ 
+    /* outer clipping box */
+    .carousel-outer {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      /* Peek hint: slight padding so partial card shows on right */
+      margin: 0 -1px; /* cancel 1px rounding artifact */
+    }
+ 
+    /* sliding track */
+    .carousel-track {
+      display: flex;
+      gap: 1.4rem;
+      transition: transform .45s var(--ease);
+      will-change: transform;
+      cursor: grab;
+    }
+    .carousel-track.dragging { cursor: grabbing; transition: none; }
+ 
+    /* individual slide */
+    .carousel-slide {
+      flex: 0 0 calc((100% - 2.8rem) / 3); /* 3 visible */
+      min-width: 0;
+    }
+ 
+    /* the card itself */
+    .resource-card {
+      display: flex; flex-direction: column; height: 100%;
+      border: 1px solid var(--rule); border-radius: var(--radius);
+      overflow: hidden; background: var(--white);
+      transition: border-color .28s var(--ease), box-shadow .28s var(--ease), transform .28s var(--ease);
+      text-decoration: none; color: var(--charcoal);
+    }
+    .resource-card:hover {
+      border-color: var(--bouquet-lt);
+      box-shadow: 0 18px 48px rgba(155,123,154,.22);
+      transform: translateY(-6px);
+    }
+ 
+    /* Image wrapper — overflow:hidden so scale doesn't bleed */
+    .resource-img-wrap {
+      overflow: hidden;
+      flex-shrink: 0;
+      /* Taller ratio suits the portrait bible flatlay + square mic/stethoscope */
+      aspect-ratio: 4 / 3;
+      background: var(--bouquet-pale);
+    }
+    .resource-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      /* For carousel-1 (portrait flatlay): show top where the candles & bibles are */
+      object-position: center 25%;
+      display: block;
+      transition: transform .6s var(--ease), filter .4s var(--ease);
+    }
+    /* carousel-2 microphone: slightly different crop */
+    .slide-mic .resource-img  { object-position: center 55%; }
+    /* carousel-3 stethoscope: centered */
+    .slide-med .resource-img  { object-position: center center; }
+ 
+    .resource-card:hover .resource-img {
+      transform: scale(1.06);
+      filter: brightness(1.04);
+    }
+ 
+    /* Bottom content area */
+    .resource-body {
+      padding: 1.4rem 1.6rem 1.8rem;
+      display: flex; flex-direction: column; gap: .35rem;
+      flex: 1;
+    }
+    .resource-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--bouquet); display: block;
+    }
+    .resource-body h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.06rem; font-weight: 600;
+      color: var(--charcoal); line-height: 1.32;
+    }
+    .resource-body p {
+      font-size: .84rem; color: var(--gray-mid);
+      line-height: 1.65; flex: 1;
+    }
+    .resource-arrow {
+      display: inline-flex; align-items: center; gap: .32rem;
+      font-size: .8rem; font-weight: 600; color: var(--bouquet);
+      margin-top: .5rem; transition: gap .2s var(--ease), color .2s var(--ease);
+    }
+    .resource-card:hover .resource-arrow { gap: .55rem; color: var(--bouquet-dk); }
+ 
+    /* ── navigation row ── */
+    .carousel-nav {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.6rem; margin-top: 2rem;
+    }
+    .carousel-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1.5px solid var(--bouquet-lt); background: var(--white);
+      color: var(--bouquet); cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s var(--ease), border-color .2s, color .2s, transform .15s;
+      line-height: 1; flex-shrink: 0;
+    }
+    .carousel-btn:hover:not(:disabled) { background: var(--bouquet); border-color: var(--bouquet); color: var(--white); transform: scale(1.08); }
+    .carousel-btn:disabled { opacity: .3; cursor: not-allowed; }
+    .carousel-dots { display: flex; gap: .55rem; align-items: center; }
+    .carousel-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--bouquet-lt); border: none; cursor: pointer; padding: 0;
+      transition: background .22s, transform .22s, width .22s;
+    }
+    .carousel-dot.active { background: var(--bouquet); transform: scale(1.2); width: 22px; border-radius: 4px; }
+    .carousel-counter {
+      font-size: .78rem; font-weight: 600; color: var(--gray-lt);
+      min-width: 52px; text-align: center;
+    }
+ 
+    /* ─── SOW NOW ─────────────────────────────── */
+    #sow { background: var(--cream); }
+    .sow-head { text-align: center; margin-bottom: 1rem; }
+    .sow-scripture {
+      text-align: center; margin-bottom: 3.5rem;
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 1rem; color: var(--gray-mid); max-width: 500px;
+      margin-left: auto; margin-right: auto;
+    }
+    .sow-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+    .sow-card {
+      background: var(--white); border: 1px solid var(--rule); border-radius: var(--radius);
+      padding: 2rem; border-top: 3px solid var(--bouquet);
+      transition: box-shadow .22s var(--ease), transform .22s var(--ease);
+    }
+    .sow-card:hover { box-shadow: 0 8px 28px rgba(155,123,154,.13); transform: translateY(-3px); }
+    .sow-icon { font-size: 1.5rem; margin-bottom: .8rem; }
+    .sow-card h3 { font-family: 'Playfair Display', serif; font-size: 1.06rem; font-weight: 600; color: var(--charcoal); margin-bottom: .55rem; }
+    .sow-card p  { font-size: .91rem; color: var(--gray-mid); line-height: 1.75; }
+ 
+    /* ─── NEWSLETTER ──────────────────────────── */
+    #newsletter { background: var(--bouquet); position: relative; overflow: hidden; }
+    #newsletter::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .newsletter-inner {
+      max-width: 560px; margin: 0 auto; padding: 6rem 6%;
+      text-align: center; position: relative; z-index: 1;
+    }
+    .newsletter-inner .eyebrow { color: rgba(255,255,255,.6); }
+    .newsletter-inner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem,3vw,2.2rem); font-weight: 700;
+      color: var(--white); margin-bottom: .8rem;
+    }
+    .newsletter-inner > p {
+      font-size: .97rem; color: rgba(255,255,255,.75);
+      margin-bottom: 2rem; line-height: 1.8;
+    }
+ 
+    /* Kit.com primary CTA button */
+    .kit-cta-btn {
+      display: inline-flex; align-items: center; gap: .7rem;
+      padding: 1em 2.2em;
+      background: var(--white); color: var(--bouquet-dk);
+      border-radius: 50px; font-family: 'Inter', sans-serif;
+      font-size: 1rem; font-weight: 700; letter-spacing: .02em;
+      text-decoration: none; margin-bottom: 1.8rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.18);
+      transition: transform .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease);
+    }
+    .kit-cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.24);
+      background: var(--cream); text-decoration: none;
+    }
+    .kit-cta-btn:active { transform: translateY(0); }
+    .kit-cta-icon { font-size: 1.1rem; }
+ 
+    /* "or" divider between Kit button and inline form */
+    .nl-or {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.6rem; color: rgba(255,255,255,.4);
+      font-size: .8rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .nl-or::before, .nl-or::after {
+      content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.2);
+    }
+    .nl-form {
+      display: flex; flex-direction: column;
+      gap: .85rem; width: 100%;
+    }
+    .nl-input {
+      width: 100%; padding: .9em 1.4em;
+      border: 2px solid transparent; border-radius: 50px;
+      font-family: 'Inter', sans-serif; font-size: 1rem;
+      background: rgba(255,255,255,.96); color: var(--charcoal);
+      outline: none;
+      transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .nl-input:focus {
+      border-color: var(--bouquet-lt);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.22);
+    }
+    .nl-input::placeholder { color: var(--gray-mid); }
+    .nl-form button {
+      width: 100%; padding: .95em 1.8em;
+      background: var(--charcoal); color: var(--white);
+      border: none; border-radius: 50px;
+      font-family: 'Inter', sans-serif; font-size: .97rem; font-weight: 600;
+      cursor: pointer; letter-spacing: .03em;
+      transition: background .22s var(--ease), transform .18s var(--ease), box-shadow .22s var(--ease);
+    }
+    .nl-form button:hover { background: #111; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.28); }
+    .nl-form button:active { transform: translateY(0); }
+    .nl-form button:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .nl-success {
+      display: none; text-align: center; padding: 2rem;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+    }
+    .nl-success .tick { font-size: 2rem; margin-bottom: .6rem; display: block; }
+    .nl-success p { color: var(--white); font-size: .97rem; font-weight: 500; line-height: 1.6; }
+    .nl-fine { margin-top: .9rem; font-size: .75rem; color: rgba(255,255,255,.45); }
+    .nl-btn {
+      width: 100%; padding: .95em 1.8em;
+      background: var(--charcoal); color: var(--white);
+      border: none; border-radius: 50px;
+      font-family: 'Inter', sans-serif; font-size: .97rem;
+      font-weight: 600; cursor: pointer; letter-spacing: .03em;
+      transition: background .22s var(--ease), transform .18s var(--ease), box-shadow .22s var(--ease);
+    }
+    .nl-btn:hover { background: #111; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.28); }
+    .nl-btn:active { transform: translateY(0); }
+    .nl-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+ 
+    /* ─── CONTACT ─────────────────────────────── */
+    #contact { background: var(--white); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: start;
+    }
+    .contact-text p {
+      font-size: .97rem; color: var(--gray-mid);
+      line-height: 1.8; margin-top: 1rem;
+    }
+    .contact-email-btn {
+      display: inline-flex; align-items: center; gap: .6rem;
+      margin-top: 1.8rem; padding: .9em 1.8em;
+      background: var(--charcoal); color: var(--white);
+      border-radius: 50px; font-family: 'Inter', sans-serif;
+      font-size: .97rem; font-weight: 600; text-decoration: none;
+      transition: background .22s var(--ease), transform .18s var(--ease), box-shadow .22s var(--ease);
+    }
+    .contact-email-btn:hover {
+      background: var(--bouquet-dk); transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(155,123,154,.35); text-decoration: none;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 1.1rem; }
+    .contact-card {
+      padding: 1.4rem 1.6rem; border: 1px solid var(--rule);
+      border-radius: var(--radius); background: var(--cream);
+      transition: border-color .2s var(--ease), transform .2s var(--ease);
+    }
+    .contact-card:hover { border-color: var(--bouquet-lt); transform: translateX(4px); }
+    .contact-card-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--bouquet); margin-bottom: .35rem; display: block;
+    }
+    .contact-card a {
+      font-weight: 600; font-size: .97rem; color: var(--charcoal);
+      text-decoration: none; transition: color .2s;
+    }
+    .contact-card a:hover { color: var(--bouquet-dk); }
+ 
+    /* ─── CONTACT FORM ───────────────────────────*/
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: .45rem; }
+    .form-label {
+      font-size: .7rem; font-weight: 700; letter-spacing: .13em;
+      text-transform: uppercase; color: var(--bouquet);
+    }
+    .form-input, .form-textarea {
+      width: 100%; padding: .82em 1.1em;
+      border: 1.5px solid var(--rule); border-radius: var(--radius);
+      font-family: 'Inter', sans-serif; font-size: .97rem;
+      color: var(--charcoal); background: var(--cream);
+      outline: none; transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--bouquet);
+      box-shadow: 0 0 0 3px rgba(155,123,154,.13);
+      background: var(--white);
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--gray-lt); }
+    .form-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+    .form-submit {
+      align-self: flex-start; padding: .88em 2.2em;
+      background: var(--bouquet); color: var(--white);
+      border: none; border-radius: 50px;
+      font-family: 'Inter', sans-serif; font-size: .97rem; font-weight: 600;
+      cursor: pointer; letter-spacing: .03em;
+      transition: background .22s var(--ease), transform .18s var(--ease), box-shadow .22s var(--ease);
+    }
+    .form-submit:hover { background: var(--bouquet-dk); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(155,123,154,.3); }
+    .form-submit:active { transform: translateY(0); }
+    .form-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+    .form-success {
+      display: none; padding: 2rem 1.5rem; text-align: center;
+      background: var(--cream); border: 1.5px solid var(--bouquet-lt);
+      border-radius: var(--radius);
+    }
+    .form-success-icon { font-size: 2rem; margin-bottom: .6rem; display: block; }
+    .form-success p { font-size: .95rem; color: var(--gray-mid); line-height: 1.6; }
+    @media (max-width: 640px) {
+      .form-row { grid-template-columns: 1fr; }
+      .form-submit { width: 100%; align-self: stretch; text-align: center; }
+    }
+ 
+    /* ─── FOOTER ──────────────────────────────── */
+    footer { background: var(--charcoal); padding: 2.8rem 6%; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,.55); }
+    .footer-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; justify-content: center; }
+    .footer-links a { font-size: .78rem; font-weight: 500; letter-spacing: .06em; color: rgba(255,255,255,.45); transition: color .2s; }
+    .footer-links a:hover { color: var(--bouquet-lt); }
+    .footer-copy    { font-size: .75rem; color: rgba(255,255,255,.4); text-align: center; }
+    .footer-tagline { font-size: .73rem; color: rgba(255,255,255,.22); }
+ 
+    /* ─── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner     { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 6%; }
+      .hero-photo-wrap { order: -1; }
+      .hero-photo-wrap img { max-width: 300px; margin: 0 auto; }
+      .hero-photo-wrap::after { display: none; }
+      .hero-badge { left: 50%; transform: translateX(-50%); white-space: nowrap; }
+      .about-grid  { grid-template-columns: 1fr; gap: 2.5rem; }
+      .values-grid { grid-template-columns: repeat(2,1fr); }
+      #blog-posts  { grid-template-columns: repeat(2,1fr); }
+      .sow-grid    { grid-template-columns: repeat(2,1fr); }
+      .contact-grid{ grid-template-columns: 1fr; gap: 2.5rem; }
+      /* Carousel: show 2 */
+      .carousel-slide { flex: 0 0 calc((100% - 1.4rem) / 2); }
+    }
+    @media (max-width: 640px) {
+      .nav-links    { display: none; }
+      .section-pad  { padding: 5rem 0; }
+      .hero-h1      { font-size: 2.6rem; }
+      .building-head{ padding: 5rem 6% 3rem; }
+      .values-grid  { grid-template-columns: 1fr; }
+      #blog-posts   { grid-template-columns: 1fr; }
+      .sow-grid     { grid-template-columns: 1fr; }
+      /* Carousel: show 1 */
+      .carousel-slide { flex: 0 0 100%; }
+    }
+  </style>
 </head>
 <body>
-
-  <!-- ===== NAVIGATION (文字完全保留) ===== -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="nav-logo">Borcelle</div>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#about">About us</a></li>
-        <li><a href="#connect">Contact Us</a></li>
-      </ul>
+ 
+<!-- ══ NAV ════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#home">TUMI<span>MURIM</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#values">Values</a></li>
+      <li><a href="#building">Building</a></li>
+    </ul>
+    <div class="nav-socials">
+      <a href="https://www.linkedin.com/in/thummim-asefa-515a3626a/" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+      <a href="https://www.instagram.com/urimtumim1/"               target="_blank" rel="noopener" aria-label="Instagram">ig</a>
+      <a href="https://github.com/tumim-asefa"                       target="_blank" rel="noopener" aria-label="GitHub">gh</a>
+      <a href="https://thummim-assefa.kit.com"                       target="_blank" rel="noopener" aria-label="Newsletter" style="background:var(--pink-pale);color:var(--bouquet-dk);border-radius:50px;padding:.28em .75em;font-weight:700;">kit</a>
     </div>
-  </nav>
-
-  <!-- ===== SLIDE 1 : HERO (professional / Portfolio / Juliana Silva) ===== -->
-  <section id="hero" class="slide hero-slide">
-    <div class="hero-content">
-      <span class="hero-tag">professional</span>
-      <h1 class="hero-title">Portfolio</h1>
-      <p class="hero-sub">Juliana Silva</p>
-      <div class="hero-badge-group">
-        <span class="badge">Borcelle</span>
-        <span class="badge">BRAND PROPOSAL</span>
-        <span class="badge">THYNK UNLIMITED</span>
-      </div>
-      <p class="hero-desc">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      </p>
-      <div class="hero-actions">
-        <a href="#about" class="btn-primary">About us</a>
-        <a href="#connect" class="btn-outline">Contact Us</a>
+  </div>
+</nav>
+ 
+<!-- ══ HERO ═══════════════════════════════════ -->
+<section class="hero metallic" id="home">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-kicker"><span>Faith · Discipline · Growth</span></div>
+      <h1 class="hero-h1">Building<br/><em>in my 20s</em></h1>
+      <p class="hero-sub">A space for thoughtful growth, disciplined living, and God-centered transformation.</p>
+      <div class="hero-ctas">
+        <a href="#about"    class="btn-primary">My Story</a>
+        <a href="#building" class="btn-ghost">What I'm Building</a>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="hero-shape"></div>
-      <div class="hero-floating-text">Live with hobbies!</div>
+    <div class="hero-photo-wrap">
+      <img src="tumi.jpg" alt="Tumim Asefa portrait" loading="eager"/>
+      <span class="hero-badge">🌿 Medical Student · Ethiopia</span>
     </div>
-  </section>
-
-  <!-- ===== SLIDE 2 : ABOUT (Professional Profile / Notable Project) ===== -->
-  <section id="about" class="slide about-slide">
+  </div>
+</section>
+ 
+<!-- ══ ABOUT ══════════════════════════════════ -->
+<section id="about" class="section-pad">
+  <div class="container">
     <div class="about-grid">
-      <div class="about-portrait">
-        <div class="portrait-placeholder">
-          <span>📸</span>
+      <div class="about-label-col">
+        <span class="eyebrow">About Me</span>
+        <div class="about-deco"></div>
+        <h2 class="display">Hi,<br/>I'm <em>Tumim.</em></h2>
+        <p>From Ethiopia. Medical student. Committed to building something meaningful with whatever I've been given.</p>
+      </div>
+      <div class="about-cards">
+        <div class="about-card">
+          <span class="about-card-tag">My Story</span>
+          <p>I am from Ethiopia, and I attend a private medical college. I live in a country where opportunities are not simply handed to you. Here, attending a private college often means your family has made significant sacrifices. So I started becoming faithful with whatever was placed in my hands — and I built this space to prove that you don't need to be born into opportunity to create one.</p>
         </div>
-        <div class="portrait-caption">WWW.REALLYGREATSITE.COM</div>
-      </div>
-      <div class="about-text">
-        <span class="section-label">Professional Profile</span>
-        <h2>Notable Project</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt
-        </p>
-        <div class="about-meta">
-          <div><strong>+123-456-7890</strong><br />www.reallygreatsite.com</div>
-          <div><strong>hello@reallygreatsite.com</strong><br />123 Anywhere St., Any City</div>
+        <div class="about-card">
+          <span class="about-card-tag">Mission</span>
+          <p>A space for thoughtful growth, disciplined living, and God-centered transformation. I won't hand you shortcuts. I am here to encourage you to start with what you already have — if you are willing to be faithful with it.</p>
         </div>
-        <a href="#connect" class="btn-primary">Let’s Connect</a>
+        <div class="about-card">
+          <span class="about-card-tag">Vision</span>
+          <p>For people determined to grow beyond their circumstances — through discipline, integrity, and faith.</p>
+        </div>
       </div>
     </div>
-  </section>
-
-  <!-- ===== SLIDE 3 : HOBBIES (my hobbies / Live with hobbies!) ===== -->
-  <section id="hobbies" class="slide hobbies-slide">
-    <div class="hobbies-header">
-      <span class="section-label light">my</span>
-      <h2>hobbies</h2>
-      <p class="hobbies-sub">Live with hobbies!</p>
+  </div>
+</section>
+ 
+<!-- ══ VALUES ═════════════════════════════════ -->
+<section id="values" class="section-pad">
+  <div class="container">
+    <div class="values-head">
+      <span class="eyebrow">What I Value</span>
+      <h2 class="display">Principles I Live By</h2>
     </div>
-    <div class="hobbies-grid">
-      <div class="hobby-card">
-        <div class="hobby-icon">✏️</div>
-        <h3>drawing</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-num">01</div>
+        <h3>Slow, Careful Steps Over Haste</h3>
+        <p>Progress built on solid foundations lasts longer than quick wins. I believe in intentional, thoughtful growth — even if it means moving slower than others. Depth matters more than speed.</p>
       </div>
-      <div class="hobby-card">
-        <div class="hobby-icon">💃</div>
-        <h3>dancing</h3>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
+      <div class="value-card">
+        <div class="value-num">02</div>
+        <h3>Discipline Over Motivation</h3>
+        <p>Motivation fades, but discipline remains. I commit to showing up consistently, regardless of how I feel. Small daily actions compound into meaningful transformation over time.</p>
       </div>
-      <div class="hobby-card">
-        <div class="hobby-icon">🏎️</div>
-        <h3>drifting</h3>
-        <p>Duis aute irure dolor in reprehenderit in voluptate.</p>
+      <div class="value-card">
+        <div class="value-num">03</div>
+        <h3>Faith Over Fear</h3>
+        <p>Fear can paralyze, but faith moves us forward. I choose to trust in something greater than my circumstances, knowing that with God at the center, everything works together for good.</p>
       </div>
     </div>
-  </section>
-
-  <!-- ===== SLIDE 4 : CONNECT (Let’s Connect) ===== -->
-  <section id="connect" class="slide connect-slide">
-    <div class="connect-container">
-      <div class="connect-info">
-        <span class="section-label">Let’s Connect</span>
-        <h2>Get in touch</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </p>
-        <ul class="connect-details">
-          <li><span>📞</span> +123-456-7890</li>
-          <li><span>🌐</span> www.reallygreatsite.com</li>
-          <li><span>✉️</span> hello@reallygreatsite.com</li>
-          <li><span>📍</span> 123 Anywhere St., Any City</li>
-        </ul>
+  </div>
+</section>
+ 
+<!-- ══ BUILDING ════════════════════════════════ -->
+<section id="building" class="metallic">
+ 
+  <div class="building-head">
+    <span class="eyebrow">What I'm Building</span>
+    <h2 class="display">Thoughts on Growth,<br/><em>Faith &amp; Discipline</em></h2>
+    <p>Honest reflections from a 20-year-old medical student learning to build intentionally.</p>
+  </div>
+ 
+  <!-- Blog Posts -->
+  <div class="blog-wrap">
+    <h3 class="sub-heading">Latest Insights</h3>
+    <div id="blog-posts">
+      <div class="blog-skel"></div>
+      <div class="blog-skel"></div>
+      <div class="blog-skel"></div>
+    </div>
+    <div class="blog-cta-row">
+      <a href="https://wordwayjourney.blogspot.com/" target="_blank" rel="noopener">Read All Articles →</a>
+    </div>
+  </div>
+ 
+  <!-- ══ RESOURCES CAROUSEL ══ -->
+  <div class="resources-wrap">
+    <h3 class="sub-heading">Resources &amp; Learning</h3>
+ 
+    <div class="carousel-outer" id="carouselOuter">
+      <div class="carousel-track" id="carouselTrack">
+ 
+        <!-- Slide 1 — Bible Study -->
+        <div class="carousel-slide">
+          <a class="resource-card"
+             href="https://phantom-tailor-db5.notion.site/Bible-study-notes-Real-time-Bible-study-Videos-36f8d2d82a1b800886bbd44511550c52"
+             target="_blank" rel="noopener">
+            <div class="resource-img-wrap">
+              <img class="resource-img" src="carousel-1.jpg" alt="Open bibles and candles — Bible study scene" loading="lazy"/>
+            </div>
+            <div class="resource-body">
+              <span class="resource-label">📖 Bible Study</span>
+              <h4>Bible Study Notes</h4>
+              <p>Real-time notes &amp; video resources from my daily Scripture study.</p>
+              <span class="resource-arrow">Explore notes →</span>
+            </div>
+          </a>
+        </div>
+ 
+        <!-- Slide 2 — Singing -->
+        <div class="carousel-slide slide-mic">
+          <a class="resource-card"
+             href="https://phantom-tailor-db5.notion.site/My-Singing-Journey-36f8d2d82a1b80c7ac89df1a03a7d623?pvs=74"
+             target="_blank" rel="noopener">
+            <div class="resource-img-wrap">
+              <img class="resource-img" src="carousel-2.jpg" alt="Microphone on a stand — singing journey" loading="lazy"/>
+            </div>
+            <div class="resource-body">
+              <span class="resource-label">🎵 Vocal Arts</span>
+              <h4>My Singing Journey</h4>
+              <p>Progress logs, reflections, and lessons from my vocal practice.</p>
+              <span class="resource-arrow">Follow the journey →</span>
+            </div>
+          </a>
+        </div>
+ 
+        <!-- Slide 3 — Medical -->
+        <div class="carousel-slide slide-med">
+          <a class="resource-card"
+             href="https://phantom-tailor-db5.notion.site/36f8d2d82a1b80eea6fdc2fc42d21462?v=36f8d2d82a1b806e8f90000c71fcc80f"
+             target="_blank" rel="noopener">
+            <div class="resource-img-wrap">
+              <img class="resource-img" src="carousel-3.jpg" alt="Stethoscope on an open textbook — medical school" loading="lazy"/>
+            </div>
+            <div class="resource-body">
+              <span class="resource-label">⚕️ Medicine</span>
+              <h4>Medical School Materials</h4>
+              <p>Study notes, study systems, and resources from medical college.</p>
+              <span class="resource-arrow">View materials →</span>
+            </div>
+          </a>
+        </div>
+ 
+      </div><!-- /track -->
+    </div><!-- /outer -->
+ 
+    <!-- Nav: prev · dots · counter · next -->
+    <div class="carousel-nav">
+      <button class="carousel-btn" id="carouselPrev" aria-label="Previous slide" disabled>&#8592;</button>
+      <div class="carousel-dots" id="carouselDots"></div>
+      <span class="carousel-counter" id="carouselCounter">1 / 3</span>
+      <button class="carousel-btn" id="carouselNext" aria-label="Next slide">&#8594;</button>
+    </div>
+ 
+  </div><!-- /resources-wrap -->
+</section>
+ 
+<!-- ══ SOW NOW ═════════════════════════════════ -->
+<section id="sow" class="section-pad">
+  <div class="container">
+    <div class="sow-head">
+      <span class="eyebrow">The Sow Now Project</span>
+      <h2 class="display">Seeds I'm <em>Planting</em></h2>
+    </div>
+    <p class="sow-scripture">"She dresses herself with strength and makes her arms strong." — Proverbs 31:17</p>
+    <div class="sow-grid">
+      <div class="sow-card"><div class="sow-icon">📖</div><h3>Studying Scripture Daily</h3><p>Deepening my relationship with God through consistent, intentional Bible study and reflection.</p></div>
+      <div class="sow-card"><div class="sow-icon">📡</div><h3>Expand My Skillset</h3><p>Continuous learning in medicine, technology, and communication to serve better and grow stronger.</p></div>
+      <div class="sow-card"><div class="sow-icon">🕊️</div><h3>Church &amp; Community</h3><p>Active engagement in faith community and service to those around me, building lasting impact.</p></div>
+      <div class="sow-card"><div class="sow-icon">🩺</div><h3>College</h3><p>Excellence in my medical education with integrity, discipline, and a commitment to lifelong learning.</p></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ══ NEWSLETTER ══════════════════════════════ -->
+<section id="newsletter" class="small-pad">
+  <div class="newsletter-inner">
+    <span class="eyebrow">Stay Connected</span>
+    <h2>Renew Your Mind</h2>
+    <p>Get my weekly thoughts on growth, faith, and discipline — straight to your inbox. No noise, just substance.</p>
+ 
+    <!-- PRIMARY: Kit.com page -->
+    <a class="kit-cta-btn"
+       href="https://thummim-assefa.kit.com"
+       target="_blank" rel="noopener">
+      <span class="kit-cta-icon">📬</span>
+      Subscribe on Kit
+    </a>
+ 
+    <!-- Success state for inline form -->
+    <div class="nl-success" id="nlSuccess">
+      <span class="tick">🌿</span>
+      <p><strong>You're in!</strong><br/>Check your inbox for a confirmation email.</p>
+    </div>
+ 
+    <!-- SECONDARY: quick inline form -->
+    <div class="nl-or">or subscribe right here</div>
+    <form id="nlForm"
+          class="nl-form"
+          action="https://app.convertkit.com/forms/6265200/subscriptions"
+          method="post">
+      <input class="nl-input"
+             name="fields[first_name]"
+             type="text"
+             placeholder="First Name"
+             autocomplete="given-name"
+             required />
+      <input class="nl-input"
+             name="email_address"
+             type="email"
+             placeholder="Email Address"
+             autocomplete="email"
+             required />
+      <button class="nl-btn" id="nlBtn" type="submit">Subscribe →</button>
+    </form>
+ 
+    <p class="nl-fine">Unsubscribe anytime — one click, no questions.</p>
+  </div>
+</section>
+ 
+<!-- ══ CONTACT ════════════════════════════════ -->
+<section id="contact" class="section-pad">
+  <div class="container">
+    <div class="contact-grid">
+ 
+      <!-- Left: text + social links -->
+      <div class="contact-text">
+        <span class="eyebrow">Get In Touch</span>
+        <h2 class="display">Let's <em>Connect</em></h2>
+        <p>I'd love to hear from you. Whether you want to connect, collaborate, or simply share your thoughts on building intentionally — reach out.</p>
+ 
+        <div class="contact-links">
+          <div class="contact-card">
+            <span class="contact-card-label">LinkedIn</span>
+            <a href="https://www.linkedin.com/in/thummim-asefa-515a3626a/" target="_blank" rel="noopener">Visit Profile →</a>
+          </div>
+          <div class="contact-card">
+            <span class="contact-card-label">Telegram</span>
+            <a href="https://t.me/Th_urim" target="_blank" rel="noopener">Message on Telegram →</a>
+          </div>
+        </div>
       </div>
-      <div class="connect-form">
-        <form action="#" method="post">
-          <input type="text" placeholder="Your Name" required />
-          <input type="email" placeholder="Your Email" required />
-          <textarea rows="4" placeholder="Message"></textarea>
-          <button type="submit" class="btn-primary full">Send Message</button>
+ 
+      <!-- Right: actual working form -->
+      <div>
+        <!-- Success message (hidden until sent) -->
+        <div class="form-success" id="cfSuccess">
+          <span class="form-success-icon">✉️</span>
+          <p><strong>Your email app is opening!</strong><br/>
+             Just hit Send in the email window that appeared.<br/>
+             If nothing opened, email me directly:<br/>
+             <a href="mailto:tumim.ugr-8660-17@aau.edu.et" style="color:var(--bouquet);font-weight:600;">tumim.ugr-8660-17@aau.edu.et</a>
+          </p>
+        </div>
+ 
+        <form id="cfForm" class="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="cfName">Your Name</label>
+              <input class="form-input" id="cfName" type="text"
+                     placeholder="e.g. Sara Johnson"
+                     autocomplete="name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cfEmail">Your Email</label>
+              <input class="form-input" id="cfEmail" type="email"
+                     placeholder="you@example.com"
+                     autocomplete="email" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cfSubject">Subject</label>
+            <input class="form-input" id="cfSubject" type="text"
+                   placeholder="What's this about?" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cfMsg">Message</label>
+            <textarea class="form-textarea" id="cfMsg" rows="5"
+                      placeholder="What's on your mind?" required></textarea>
+          </div>
+          <button class="form-submit" id="cfBtn" type="submit">
+            Send Message →
+          </button>
         </form>
-        <p class="form-sub">
-          <small>or subscribe via <a href="#">Kit (ConvertKit)</a></small>
-        </p>
       </div>
+ 
     </div>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="site-footer">
-    <p>© 2026 Juliana Silva · Built with care</p>
-    <p>
-      <a href="#hero">Home</a> · <a href="#about">About us</a> ·
-      <a href="#hobbies">Hobbies</a> · <a href="#connect">Contact Us</a>
-    </p>
-  </footer>
-
-  <!-- ===== HAMBURGER TOGGLE ===== -->
-  <script>
-    const toggle = document.getElementById('navToggle');
-    const links = document.getElementById('navLinks');
-    toggle.addEventListener('click', () => {
-      links.classList.toggle('open');
-    });
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => links.classList.remove('open'));
-    });
-  </script>
+  </div>
+</section>
+ 
+<!-- ══ FOOTER ══════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">TUMIMURIM</span>
+    <ul class="footer-links">
+      <li><a href="https://wordwayjourney.blogspot.com/"                         target="_blank">Blog</a></li>
+      <li><a href="https://thummim-assefa.kit.com"                               target="_blank">Newsletter</a></li>
+      <li><a href="https://www.linkedin.com/in/thummim-asefa-515a3626a/"         target="_blank">LinkedIn</a></li>
+      <li><a href="https://www.instagram.com/urimtumim1/"                        target="_blank">Instagram</a></li>
+      <li><a href="https://github.com/tumim-asefa"                               target="_blank">GitHub</a></li>
+      <li><a href="https://substack.com/@thummimurim"                            target="_blank">Substack</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 TUMIMURIM. Built to inspire. All rights reserved.</p>
+    <p class="footer-tagline">🌿 Cultivating growth through faith and discipline.</p>
+  </div>
+</footer>
+ 
+<!-- ════════════════════════════════════════════
+     BLOG — bulletproof dual-proxy + fallback
+     ════════════════════════════════════════════ -->
+<script>
+const FALLBACK = [
+  { title:"Reflections on growing up, transformation, and the four stages of becoming",
+    link:"https://wordwayjourney.blogspot.com/2026/05/reflections-on-growing-up.html",
+    date:"May 28, 2026",
+    excerpt:"Age is not just a number. Age is a responsibility, a warning, a mirror — staring back and asking what have you done with what I gave you." },
+  { title:"Brick-By-Brick Mentality — How to get out of analysis paralysis",
+    link:"https://wordwayjourney.blogspot.com/2026/05/brick-by-brick-mentality-how-to-get-out.html",
+    date:"May 28, 2026",
+    excerpt:"Sometimes the weight of everything we want to do keeps us from doing anything at all. The antidote: start with one brick." },
+  { title:"Be Selective With What You Consume",
+    link:"https://wordwayjourney.blogspot.com/2026/05/be-selective-with-what-you-consume.html",
+    date:"May 28, 2026",
+    excerpt:"The content we feed our minds shapes who we become. Curate your inputs with the same intentionality you give your goals." }
+];
+function renderPosts(posts){
+  document.getElementById('blog-posts').innerHTML = posts.map(p=>`
+    <article class="blog-card">
+      <time class="blog-date">${p.date}</time>
+      <h3 class="blog-title"><a href="${p.link}" target="_blank" rel="noopener">${p.title}</a></h3>
+      <p class="blog-excerpt">${p.excerpt}</p>
+      <a class="read-more" href="${p.link}" target="_blank" rel="noopener">Read more →</a>
+    </article>`).join('');
+}
+async function tryRss2Json(){
+  const r=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+
+    encodeURIComponent('https://wordwayjourney.blogspot.com/feeds/posts/default')+'&count=3',
+    {signal:AbortSignal.timeout(6000)});
+  const d=await r.json();
+  if(d.status!=='ok'||!d.items?.length) throw new Error();
+  return d.items.map(i=>({title:i.title,link:i.link,
+    date:new Date(i.pubDate).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}),
+    excerpt:i.description.replace(/<[^>]*>/g,'').trim().slice(0,190)+'…'}));
+}
+async function tryAllOrigins(){
+  const u='https://api.allorigins.win/get?url='+
+    encodeURIComponent('https://wordwayjourney.blogspot.com/feeds/posts/default?alt=json&max-results=3');
+  const r=await fetch(u,{signal:AbortSignal.timeout(6000)});
+  const d=await r.json();
+  const entries=(JSON.parse(d.contents).feed.entry||[]).slice(0,3);
+  if(!entries.length) throw new Error();
+  return entries.map(e=>({title:e.title.$t,
+    link:(e.link.find(l=>l.rel==='alternate')||{}).href||'#',
+    date:new Date(e.published.$t).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}),
+    excerpt:(e.summary?.$t||'').replace(/<[^>]*>/g,'').trim().slice(0,190)+'…'}));
+}
+(async()=>{
+  renderPosts(FALLBACK);
+  try{const live=await tryRss2Json().catch(()=>tryAllOrigins());
+    if(live?.length) renderPosts(live);}
+  catch(e){console.info('Blog: showing cached posts');}
+})();
+</script>
+ 
+<!-- ════════════════════════════════════════════
+     RESOURCES CAROUSEL
+     ════════════════════════════════════════════ -->
+<script>
+(function(){
+  const track   = document.getElementById('carouselTrack');
+  const outer   = document.getElementById('carouselOuter');
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
+  const dotsEl  = document.getElementById('carouselDots');
+  const counter = document.getElementById('carouselCounter');
+  const slides  = track.querySelectorAll('.carousel-slide');
+  const N       = slides.length;
+  let   idx     = 0;
+ 
+  /* ── responsive: how many slides visible ── */
+  function visCount(){
+    const w = window.innerWidth;
+    return w > 900 ? 3 : w > 640 ? 2 : 1;
+  }
+  /* ── max scroll index ── */
+  function maxIdx(){ return Math.max(0, N - visCount()); }
+ 
+  /* ── slide width for a single item ── */
+  function slideW(){
+    const gap = parseFloat(getComputedStyle(track).gap) || 22.4;
+    const vc  = visCount();
+    return (outer.offsetWidth - gap*(vc-1)) / vc;
+  }
+ 
+  /* ── build dots ── */
+  function buildDots(){
+    dotsEl.innerHTML = '';
+    const count = maxIdx() + 1;
+    for(let i=0;i<count;i++){
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i===0?' active':'');
+      d.setAttribute('aria-label','Slide '+(i+1));
+      d.addEventListener('click',()=>goTo(i));
+      dotsEl.appendChild(d);
+    }
+  }
+ 
+  /* ── go to index ── */
+  function goTo(i){
+    idx = Math.max(0, Math.min(i, maxIdx()));
+    const gap = parseFloat(getComputedStyle(track).gap) || 22.4;
+    track.style.transform = 'translateX(-'+(idx*(slideW()+gap))+'px)';
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx >= maxIdx();
+    counter.textContent = (idx+1)+' / '+N;
+    dotsEl.querySelectorAll('.carousel-dot').forEach((d,j)=>
+      d.classList.toggle('active', j===idx));
+  }
+ 
+  prevBtn.addEventListener('click', ()=>goTo(idx-1));
+  nextBtn.addEventListener('click', ()=>goTo(idx+1));
+ 
+  /* ── touch / drag ── */
+  let startX=0, startIdx=0, dragged=false;
+  function onDragStart(e){
+    startX = e.type==='touchstart' ? e.touches[0].clientX : e.clientX;
+    startIdx = idx; dragged = false;
+    track.classList.add('dragging');
+  }
+  function onDragMove(e){
+    const x = e.type==='touchmove' ? e.touches[0].clientX : e.clientX;
+    const dx = startX - x;
+    if(Math.abs(dx)>6){ dragged=true; e.preventDefault(); }
+    const gap = parseFloat(getComputedStyle(track).gap)||22.4;
+    const base = startIdx*(slideW()+gap);
+    track.style.transform='translateX(-'+(base+dx)+'px)';
+  }
+  function onDragEnd(e){
+    track.classList.remove('dragging');
+    const x = e.type==='touchend'
+      ? e.changedTouches[0].clientX : e.clientX;
+    const dx = startX - x;
+    if(dragged){
+      if(dx >  50) goTo(startIdx+1);
+      else if(dx < -50) goTo(startIdx-1);
+      else goTo(startIdx);
+    }
+  }
+  track.addEventListener('touchstart', onDragStart, {passive:true});
+  track.addEventListener('touchmove',  onDragMove,  {passive:false});
+  track.addEventListener('touchend',   onDragEnd,   {passive:true});
+  track.addEventListener('mousedown',  onDragStart);
+  window.addEventListener('mousemove', e=>{ if(track.classList.contains('dragging')) onDragMove(e); });
+  window.addEventListener('mouseup',   e=>{ if(track.classList.contains('dragging')) onDragEnd(e); });
+ 
+  /* ── keyboard ── */
+  outer.setAttribute('tabindex','0');
+  outer.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft')  goTo(idx-1);
+    if(e.key==='ArrowRight') goTo(idx+1);
+  });
+ 
+  /* ── resize ── */
+  let timer;
+  window.addEventListener('resize',()=>{
+    clearTimeout(timer);
+    timer=setTimeout(()=>{ buildDots(); goTo(Math.min(idx,maxIdx())); },150);
+  });
+ 
+  /* ── init ── */
+  buildDots();
+  goTo(0);
+})();
+</script>
+ 
+<!-- ════════════════════════════════════════════
+     NEWSLETTER — AJAX to ConvertKit
+     ════════════════════════════════════════════ -->
+<script>
+(function () {
+  var form    = document.getElementById('nlForm');
+  var btn     = document.getElementById('nlBtn');
+  var success = document.getElementById('nlSuccess');
+  if (!form) return;
+ 
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    btn.disabled    = true;
+    btn.textContent = 'Subscribing…';
+ 
+    try {
+      /* ConvertKit accepts no-cors POST with FormData */
+      await fetch(form.action, {
+        method: 'POST',
+        mode:   'no-cors',       // ConvertKit doesn't set CORS headers — this bypasses the check
+        body:   new FormData(form)
+      });
+    } catch (_) { /* network errors — still show success since no-cors always throws */ }
+ 
+    /* Show success, hide form */
+    form.style.display    = 'none';
+    success.style.display = 'block';
+  });
+})();
+</script>
+ 
+<!-- ════════════════════════════════════════════
+     CONTACT FORM — opens email client pre-filled
+     ════════════════════════════════════════════ -->
+<script>
+(function () {
+  var form    = document.getElementById('cfForm');
+  var btn     = document.getElementById('cfBtn');
+  var success = document.getElementById('cfSuccess');
+  if (!form) return;
+ 
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+ 
+    /* Grab values */
+    var name    = document.getElementById('cfName').value.trim();
+    var email   = document.getElementById('cfEmail').value.trim();
+    var subject = document.getElementById('cfSubject').value.trim();
+    var msg     = document.getElementById('cfMsg').value.trim();
+ 
+    /* Validate */
+    if (!name || !email || !subject || !msg) {
+      alert('Please fill in all fields.');
+      return;
+    }
+ 
+    /* Build mailto — opens the user's default email app with everything pre-filled */
+    var body = 'Hi Tumim,\n\nMy name is ' + name + ' and my email is ' + email + '.\n\n' + msg + '\n\nBest,\n' + name;
+    var href = 'mailto:tumim.ugr-8660-17@aau.edu.et'
+             + '?subject=' + encodeURIComponent(subject)
+             + '&body='    + encodeURIComponent(body);
+ 
+    window.open(href, '_blank');
+ 
+    /* Show success state */
+    form.style.display    = 'none';
+    success.style.display = 'block';
+ 
+    /* Reset form in case they close the success and come back */
+    setTimeout(function () { form.reset(); }, 3000);
+  });
+})();
+</script>
+ 
 </body>
 </html>
+ 
