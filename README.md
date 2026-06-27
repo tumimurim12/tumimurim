@@ -1,42 +1,16 @@
-# TUMIMURIM — Building in My 20s
+# Fix for tumimurim12/tumimurim
 
-A personal site for thoughtful growth, disciplined living, and God-centered transformation.
-Static front-end (`index.html`, `style.css`, images) deployed on **Vercel**.
+## The bug
+`script.js` in your repo contains a copy of `vercel.json` (a JSON object),
+not JavaScript. The browser throws a SyntaxError on load, so the
+hamburger nav toggle never gets attached. On screens ≤ 900px the menu
+is `display: none` by default and stays hidden / unstyled because
+nothing can add the `.open` class.
 
-## Structure
+## The fix
+1. Replace your repo's `script.js` with the file in this folder.
+2. Commit and push. Vercel will redeploy automatically.
 
-| File | Purpose |
-| --- | --- |
-| `index.html` | The full site — markup, styles, and inline scripts (blog feed, carousel, forms) |
-| `style.css` | Shared base styles |
-| `carousel-1.jpg`, `carousel-2.jpg`, `carousel-3.jpg`, `tumi.jpg` | Images |
-| `vercel.json` | Vercel deployment config |
-| `.vercelignore` | Files excluded from the Vercel build |
-
-## Newsletter
-
-Email signups are handled entirely by **[Kit](https://thummim-assefa.kit.com) (ConvertKit)**.
-The inline subscribe form on the page posts directly to Kit — there is no custom backend to run or maintain.
-
-## Local preview
-
-It's a static site, so any static server works:
-
-```bash
-# Python
-python3 -m http.server 8000
-
-# or Node
-npx serve .
-```
-
-Then open <http://localhost:8000>.
-
-## Deploying
-
-The site auto-deploys to Vercel on every push to `main`.
-
-1. Commit and push your changes.
-2. Vercel builds and serves the static files from the repo root (per `vercel.json`).
-
-No build step or server is required.
+That's it — the file in `script.js` is the only change needed.
+The HTML already references it correctly (`<script src="script.js"></script>`)
+and `style.css` already has the `.nav-center.open { display: flex }` rule.
