@@ -11,12 +11,12 @@
   <title>TUMIMURIM - Building in My 20s</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Alegreya+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Alegreya+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- NAVIGATION -->
+  <!-- NAV -->
   <nav class="nav" id="nav">
     <div class="nav-logo">TUMIMURIM</div>
     <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
@@ -38,18 +38,19 @@
 
   <main>
 
-    <!-- ══ HERO SECTION ══ Slides 1 + 5 -->
+    <!-- HERO — Slides 1 + 5 -->
     <section class="hero" id="home">
       <div class="hero-left">
-        <div class="dots-block hero-dots"></div>
+        <div class="hero-dots"></div>
         <p class="eyebrow">Faith · Discipline · Growth</p>
-        <div class="hero-crimson-block">
+        <div class="hero-spacer"></div>
+        <div class="hero-block">
           <h1 class="hero-title">Building<br>in my<br><em>20s</em></h1>
         </div>
         <p class="hero-sub">A space for thoughtful growth, disciplined living, and God-centered transformation.</p>
         <div class="hero-actions">
-          <a href="#about" class="btn btn--primary">My Story</a>
-          <a href="#building" class="btn btn--outline">What I'm Building</a>
+          <a href="#about" class="btn btn-primary">My Story</a>
+          <a href="#building" class="btn btn-outline">What I'm Building</a>
         </div>
       </div>
       <div class="hero-right">
@@ -58,16 +59,16 @@
           alt="Tumim Asefa portrait"
           class="hero-photo"
           loading="eager"
-          onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22800%22%3E%3Crect fill=%22%237A2233%22 width=%22600%22 height=%22800%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22serif%22 font-size=%2228%22 fill=%22%23F0EBE3%22%3ETumim Asefa%3C/text%3E%3C/svg%3E';"
+          onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22800%22%3E%3Crect fill=%22%237A2233%22 width=%22600%22 height=%22800%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22serif%22 font-size=%2228%22 fill=%22%23F0EBE3%22%3ETumim%3C/text%3E%3C/svg%3E';"
         >
         <div class="hero-overlay"></div>
       </div>
     </section>
 
-    <!-- ══ ABOUT SECTION ══ Slide 2 -->
+    <!-- ABOUT — Slide 2 -->
     <section class="about" id="about">
-      <div class="about-accent-block"></div>
-      <div class="dots-block about-dots-tl"></div>
+      <div class="about-accent"></div>
+      <div class="about-dots"></div>
       <div class="about-inner">
         <div class="about-text">
           <span class="eyebrow">About Me</span>
@@ -95,18 +96,18 @@
               alt="Tumim Asefa portrait"
               class="about-photo"
               loading="lazy"
-              onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22520%22%3E%3Crect fill=%22%237A2233%22 width=%22400%22 height=%22520%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22serif%22 font-size=%2224%22 fill=%22%23F0EBE3%22%3ETumim Asefa%3C/text%3E%3C/svg%3E';"
+              onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22520%22%3E%3Crect fill=%22%237A2233%22 width=%22400%22 height=%22520%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22serif%22 font-size=%2224%22 fill=%22%23F0EBE3%22%3ETumim%3C/text%3E%3C/svg%3E';"
             >
           </div>
-          <div class="dots-block about-dots-br"></div>
+          <div class="about-dots-br"></div>
         </div>
       </div>
     </section>
 
-    <!-- ══ PRINCIPLES SECTION ══ Slide 3 -->
+    <!-- PRINCIPLES — Slide 3 -->
     <section class="principles" id="values">
       <div class="principles-top">
-        <div class="dots-block principles-dots-tl"></div>
+        <div class="principles-dots-tl"></div>
         <div class="principles-dots-tr"></div>
         <div class="principles-header">
           <span class="eyebrow">What I Value</span>
@@ -132,7 +133,7 @@
       </div>
     </section>
 
-    <!-- ══ BUILDING SECTION ══ -->
+    <!-- BUILDING -->
     <section class="building" id="building">
       <div class="building-header">
         <span class="eyebrow">What I'm Building</span>
@@ -146,7 +147,7 @@
           <div class="blog-loading"><p>Loading latest insights...</p></div>
         </div>
         <div class="building-cta">
-          <a href="https://wordwayjourney.blogspot.com/" target="_blank" class="btn btn--primary">Read All Articles →</a>
+          <a href="https://wordwayjourney.blogspot.com/" target="_blank" class="btn btn-primary">Read All Articles →</a>
         </div>
       </div>
 
@@ -155,7 +156,7 @@
         <div class="carousel-container">
           <div class="carousel">
             <div class="carousel-item">
-              <a href="https://phantom-tailor-db5.notion.site/Bible-study-notes-Real-time-Bible-study-Videos-36f8d2d82a1b800886bbd44511550c52" target="_blank" rel="noopener noreferrer" class="carousel-link">
+              <a href="https://phantom-tailor-db5.notion.site/Bible-study-notes-Real-time-Bible-study-Videos-36f8d2d82a1b800886bbd44511550c52" target="_blank" rel="noopener noreferrer">
                 <div class="carousel-item-image">
                   <img class="carousel-item-img" src="carousel-1.jpg" alt="Bible Study Notes" loading="lazy" onerror="this.style.display='none'">
                   <span class="carousel-emoji">📖</span>
@@ -164,7 +165,7 @@
               </a>
             </div>
             <div class="carousel-item">
-              <a href="https://phantom-tailor-db5.notion.site/My-Singing-Journey-36f8d2d82a1b80c7ac89df1a03a7d623?pvs=74" target="_blank" rel="noopener noreferrer" class="carousel-link">
+              <a href="https://phantom-tailor-db5.notion.site/My-Singing-Journey-36f8d2d82a1b80c7ac89df1a03a7d623?pvs=74" target="_blank" rel="noopener noreferrer">
                 <div class="carousel-item-image">
                   <img class="carousel-item-img" src="carousel-2.jpg" alt="My Singing Journey" loading="lazy" onerror="this.style.display='none'">
                   <span class="carousel-emoji">🎵</span>
@@ -173,7 +174,7 @@
               </a>
             </div>
             <div class="carousel-item">
-              <a href="https://phantom-tailor-db5.notion.site/36f8d2d82a1b80eea6fdc2fc42d21462?v=36f8d2d82a1b806e8f90000c71fcc80f" target="_blank" rel="noopener noreferrer" class="carousel-link">
+              <a href="https://phantom-tailor-db5.notion.site/36f8d2d82a1b80eea6fdc2fc42d21462?v=36f8d2d82a1b806e8f90000c71fcc80f" target="_blank" rel="noopener noreferrer">
                 <div class="carousel-item-image">
                   <img class="carousel-item-img" src="carousel-3.jpg" alt="Medical School Materials" loading="lazy" onerror="this.style.display='none'">
                   <span class="carousel-emoji">⚕️</span>
@@ -187,7 +188,7 @@
       </div>
     </section>
 
-    <!-- ══ SOW NOW SECTION ══ -->
+    <!-- SEEDS -->
     <section class="seeds" id="progress">
       <div class="seeds-header">
         <span class="eyebrow">The Sow Now Project</span>
@@ -218,18 +219,18 @@
       </div>
     </section>
 
-    <!-- ══ NEWSLETTER SECTION ══ -->
+    <!-- NEWSLETTER -->
     <section class="newsletter-section">
       <div class="newsletter-inner">
         <div class="newsletter-text">
-          <span class="eyebrow eyebrow--light">Stay Connected</span>
+          <span class="eyebrow eyebrow-light">Stay Connected</span>
           <h2 class="newsletter-heading">Renew Your<br><em>Mind</em></h2>
           <p class="newsletter-sub">Get my weekly thoughts on growth, faith, and discipline — straight to your inbox. No noise, just substance.</p>
         </div>
         <div class="newsletter-form-col">
           <form id="newsletter-form" class="newsletter-form" action="/api/subscribe" method="POST" onsubmit="handleNewsletterSubmit(event)">
             <input type="email" name="email" class="newsletter-input" placeholder="Enter your email" required>
-            <button type="submit" class="btn btn--light">Subscribe →</button>
+            <button type="submit" class="btn btn-light">Subscribe →</button>
           </form>
           <div class="newsletter-message" aria-live="polite"></div>
           <p class="newsletter-fine">We respect your privacy. Unsubscribe at any time.</p>
@@ -237,15 +238,15 @@
       </div>
     </section>
 
-    <!-- ══ LET'S CONNECT SECTION ══ Slide 4 -->
+    <!-- CONNECT — Slide 4 -->
     <section class="connect" id="contact">
       <div class="connect-left">
-        <div class="dots-block connect-dots-bl"></div>
+        <div class="connect-dots-bl"></div>
         <p class="connect-intro">I'd love to hear from you — whether you want to connect, collaborate, or share your thoughts on building intentionally.</p>
         <h2 class="connect-heading">Let's<br>Connect</h2>
       </div>
       <div class="connect-right">
-        <div class="dots-block connect-dots-tr"></div>
+        <div class="connect-dots-tr"></div>
         <div class="connect-items">
           <div class="connect-item">
             <div class="connect-icon">✉</div>
@@ -281,7 +282,6 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">TUMIMURIM</div>
