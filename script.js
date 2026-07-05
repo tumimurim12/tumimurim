@@ -51,9 +51,7 @@ async function loadBlogPosts() {
   if (!container) return;
 
   try {
-    const response = await fetch(
-      'https://wordwayjourney.blogspot.com/feeds/posts/default?alt=json&max-results=3'
-    );
+    const response = await fetch('/api/blog');
     if (!response.ok) throw new Error('Feed unavailable');
 
     const data = await response.json();
