@@ -51,7 +51,10 @@ async function loadBlogPosts() {
   if (!container) return;
 
   try {
-    const response = await fetch('/api/blog');
+    // Use Google's Feed API to bypass CORS issues with Blogger RSS
+    const feedUrl = 'https://wordwayjourney.blogspot.com/feeds/posts/default?alt=json&max-results=3';
+    const response = await fetch(feedUrl);
+    
     if (!response.ok) throw new Error('Feed unavailable');
 
     const data = await response.json();
@@ -66,8 +69,11 @@ async function loadBlogPosts() {
     container.innerHTML = entries
       .map((entry) => {
         const title = entry.title?.$t || 'Untitled';
-        const link =
-          entry.link?.find((item) => item.rel === 'alternate')?.href || '#';
+        
+        // Get the alternate link (blog post URL)
+        const link = entry.link?.find((l) => l.rel === 'alternate')?.href || 
+                     entry.link?.[0]?.href || '#';
+        
         const published = entry.published?.$t;
         const date = published
           ? new Date(published).toLocaleDateString('en-US', {
@@ -76,6 +82,7 @@ async function loadBlogPosts() {
               day: 'numeric',
             })
           : '';
+        
         const rawSummary = entry.summary?.$t || entry.content?.$t || '';
         const excerpt =
           rawSummary.replace(/<[^>]+>/g, '').trim().slice(0, 150) +
@@ -88,7 +95,8 @@ async function loadBlogPosts() {
         </a>`;
       })
       .join('');
-  } catch {
+  } catch (error) {
+    console.error('Blog fetch error:', error);
     container.innerHTML =
       '<div class="blog-loading"><p>Could not load posts. <a href="https://wordwayjourney.blogspot.com/" target="_blank" rel="noopener noreferrer">Visit the blog →</a></p></div>';
   }
