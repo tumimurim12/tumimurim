@@ -46,18 +46,12 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-async function loadBlogPosts() {
+// Global callback for JSONP
+window.handleBlogFeed = function(data) {
   const container = document.getElementById('blog-posts');
   if (!container) return;
 
   try {
-    // Use Google's Feed API to bypass CORS issues with Blogger RSS
-    const feedUrl = 'https://wordwayjourney.blogspot.com/feeds/posts/default?alt=json&max-results=3';
-    const response = await fetch(feedUrl);
-    
-    if (!response.ok) throw new Error('Feed unavailable');
-
-    const data = await response.json();
     const entries = data.feed?.entry || [];
 
     if (!entries.length) {
@@ -96,10 +90,26 @@ async function loadBlogPosts() {
       })
       .join('');
   } catch (error) {
-    console.error('Blog fetch error:', error);
+    console.error('Blog feed error:', error);
     container.innerHTML =
       '<div class="blog-loading"><p>Could not load posts. <a href="https://wordwayjourney.blogspot.com/" target="_blank" rel="noopener noreferrer">Visit the blog →</a></p></div>';
   }
+};
+
+function loadBlogPosts() {
+  const container = document.getElementById('blog-posts');
+  if (!container) return;
+
+  // Load JSONP script dynamically
+  const script = document.createElement('script');
+  script.src = 'https://wordwayjourney.blogspot.com/feeds/posts/default?alt=json-in-script&callback=handleBlogFeed&max-results=3';
+  script.async = true;
+  script.onerror = () => {
+    console.error('Failed to load blog feed');
+    container.innerHTML =
+      '<div class="blog-loading"><p>Could not load posts. <a href="https://wordwayjourney.blogspot.com/" target="_blank" rel="noopener noreferrer">Visit the blog →</a></p></div>';
+  };
+  document.head.appendChild(script);
 }
 
 function scrollCarousel() {
