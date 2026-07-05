@@ -46,13 +46,18 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-// Global callback for JSONP
+// Global callback for JSONP - must be defined before the script loads
 window.handleBlogFeed = function(data) {
+  console.log('Blog feed data received:', data);
   const container = document.getElementById('blog-posts');
-  if (!container) return;
+  if (!container) {
+    console.error('Blog container not found');
+    return;
+  }
 
   try {
     const entries = data.feed?.entry || [];
+    console.log('Number of entries:', entries.length);
 
     if (!entries.length) {
       container.innerHTML =
@@ -60,7 +65,7 @@ window.handleBlogFeed = function(data) {
       return;
     }
 
-    container.innerHTML = entries
+    const postsHtml = entries
       .map((entry) => {
         const title = entry.title?.$t || 'Untitled';
         
@@ -89,6 +94,8 @@ window.handleBlogFeed = function(data) {
         </a>`;
       })
       .join('');
+    
+    container.innerHTML = postsHtml;
   } catch (error) {
     console.error('Blog feed error:', error);
     container.innerHTML =
@@ -98,17 +105,35 @@ window.handleBlogFeed = function(data) {
 
 function loadBlogPosts() {
   const container = document.getElementById('blog-posts');
-  if (!container) return;
+  if (!container) {
+    console.error('Blog container element not found');
+    return;
+  }
+
+  // Build the JSONP URL
+  const blogUrl = 'https://wordwayjourney.blogspot.com';
+  const feedUrl = new URL(blogUrl + '/feeds/posts/default');
+  feedUrl.searchParams.append('alt', 'json-in-script');
+  feedUrl.searchParams.append('callback', 'handleBlogFeed');
+  feedUrl.searchParams.append('max-results', '3');
+
+  console.log('Loading blog feed from:', feedUrl.toString());
 
   // Load JSONP script dynamically
   const script = document.createElement('script');
-  script.src = 'https://wordwayjourney.blogspot.com/feeds/posts/default?alt=json-in-script&callback=handleBlogFeed&max-results=3';
+  script.src = feedUrl.toString();
   script.async = true;
+  
   script.onerror = () => {
-    console.error('Failed to load blog feed');
+    console.error('Failed to load blog feed script');
     container.innerHTML =
       '<div class="blog-loading"><p>Could not load posts. <a href="https://wordwayjourney.blogspot.com/" target="_blank" rel="noopener noreferrer">Visit the blog →</a></p></div>';
   };
+
+  script.onload = () => {
+    console.log('Blog feed script loaded successfully');
+  };
+
   document.head.appendChild(script);
 }
 
