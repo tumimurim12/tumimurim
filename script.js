@@ -143,24 +143,4 @@ function scrollCarousel() {
   container.scrollBy({ left: 320, behavior: 'smooth' });
 }
 
-function handleNewsletterSubmit(event) {
-  event.preventDefault();
 
-  const form = event.target;
-  const input = form.querySelector('input[type="email"]');
-  const messageEl = form
-    .closest('.newsletter-form-col')
-    ?.querySelector('.newsletter-message');
-  const email = input?.value?.trim();
-
-  if (!email) return;
-
-  window.open('https://thummim-assefa.kit.com', '_blank', 'noopener,noreferrer');
-
-  if (messageEl) {
-    messageEl.textContent =
-      'Thanks! Complete your signup on the newsletter page that just opened.';
-  }
-
-  form.reset();
-}
